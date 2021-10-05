@@ -2,7 +2,7 @@
 rm -rf android &&
 rm -rf build &&
 npm run build --prod &&
-ionic capacitor build android &&
+ionic capacitor add android &&
 npm run resources &&
 docker run -ti --rm \
 -v $(pwd):/myApp:rw \
