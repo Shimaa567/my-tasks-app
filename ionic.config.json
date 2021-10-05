@@ -1,0 +1,7 @@
+{
+  "name": "sourcya-my-tasks-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
