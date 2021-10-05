@@ -1,0 +1,10 @@
+#!/bin/bash
+rm -rf android &&
+rm -rf build &&
+ionic capacitor build android &&
+npm run resources &&
+docker run -ti --rm \
+-v $(pwd):/myApp:rw \
+-w /myApp \
+beevelop/ionic \
+bash gradlew_assemble_debug
