@@ -8,4 +8,4 @@ docker run -ti --rm \
 -v $(pwd):/myApp:rw \
 -w /myApp \
 beevelop/ionic \
-bash gradlew_assemble_debug
+bash -c "yes | /opt/android/tools/bin/sdkmanager --update;yes | /opt/android/tools/bin/sdkmanager --licenses;cd android;./gradlew assembleDebug"
