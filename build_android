@@ -13,6 +13,7 @@ bash -c " \
     yes | /opt/android/tools/bin/sdkmanager --licenses && \
     cd android && \
     ./gradlew assembleDebug && \
+    cd .. && \
     mkdir -p APK && \
     cp android/app/build/outputs/apk/debug/app-debug.apk APK/app-debug.apk \
 "
