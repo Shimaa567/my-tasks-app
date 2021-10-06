@@ -2,12 +2,12 @@
 docker run -ti --rm \
 -v $(pwd):/myApp:rw \
 -w /myApp \
-mutasimissa/ionic-capacitor-android-build \
+beevelop/ionic:latest \
 bash -c " \
     rm -rf android && \
     rm -rf build && \
-    ionic build --prod && \
-    ionic capacitor build android && \
+    ionic build && \
+    ionic capacitor build android --no-open && \
     yes | /opt/android/tools/bin/sdkmanager --update && \
     yes | /opt/android/tools/bin/sdkmanager --licenses && \
     cd android && \
