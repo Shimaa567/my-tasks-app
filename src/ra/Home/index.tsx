@@ -23,8 +23,8 @@ const useStyles = makeStyles((theme) => ({
 const Home: React.FC = () => {
   const [tasksCount, setTasksCount] = useState(0);
   const [loading, setLoading] = useState(true);
+  const dataProvider = useDataProvider();
   useEffect(() => {
-    const dataProvider = useDataProvider();
     dataProvider.getList('tasks', {
       pagination: {
         page: 1,
@@ -40,6 +40,7 @@ const Home: React.FC = () => {
         setLoading(false)
         setTasksCount(total)
       })
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const classes = useStyles();
 
