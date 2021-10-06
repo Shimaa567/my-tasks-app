@@ -1,6 +1,7 @@
 #!/bin/bash
 rm -rf android &&
 rm -rf build &&
+npm install &&
 npm run build --prod &&
 ionic capacitor add android &&
 npm run resources &&
