@@ -1,12 +1,17 @@
 #!/bin/bash
-rm -rf android &&
-rm -rf build &&
-npm install &&
-npm run build --prod &&
-ionic capacitor add android &&
-npm run resources &&
 docker run -ti --rm \
 -v $(pwd):/myApp:rw \
 -w /myApp \
 beevelop/ionic \
-bash -c "yes | /opt/android/tools/bin/sdkmanager --update;yes | /opt/android/tools/bin/sdkmanager --licenses;cd android;./gradlew assembleDebug"
+bash -c " \
+    rm -rf android && \
+    rm -rf build && \
+    ionic build --prod && \
+    ionic capacitor build android && \
+    yes | /opt/android/tools/bin/sdkmanager --update && \
+    yes | /opt/android/tools/bin/sdkmanager --licenses && \
+    cd android && \
+    ./gradlew assembleDebug && \
+    mkdir -p APK && \
+    cp android/app/build/outputs/apk/debug/app-debug.apk APK/app-debug.apk \
+"
