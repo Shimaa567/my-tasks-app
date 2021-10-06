@@ -146,7 +146,7 @@ export const Login: React.FC = () => {
                                     <img alt="LOGO" src="/assets/icon/icon.png" className={classes.logo} />
                                 </div>
                                 <div className={classes.hint}>
-                                    Login or&nbsp;<a href="#" onClick={(e) => { e.preventDefault(); setSignupDialog(true)}}>Signup</a>
+                                    Login or&nbsp;<a href="/signup" onClick={(e) => { e.preventDefault(); setSignupDialog(true)}}>Signup</a>
                                 </div>
                                 <div className={classes.form}>
                                     <div className={classes.input}>

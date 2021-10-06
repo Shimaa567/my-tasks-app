@@ -21,25 +21,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Home: React.FC = () => {
-  const dataProvider = useDataProvider();
   const [tasksCount, setTasksCount] = useState(0);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-      dataProvider.getList('tasks', {
-        pagination: {
-          page: 1,
-          perPage: 10
-        },
-        sort: {
-          field: "_id",
-          order: "ASC"
-        },
-        filter: {}
+    const dataProvider = useDataProvider();
+    dataProvider.getList('tasks', {
+      pagination: {
+        page: 1,
+        perPage: 10
+      },
+      sort: {
+        field: "_id",
+        order: "ASC"
+      },
+      filter: {}
+    })
+      .then(({ total }) => {
+        setLoading(false)
+        setTasksCount(total)
       })
-        .then(({ total }) => {
-          setLoading(false)
-          setTasksCount(total)
-        })
   }, []);
   const classes = useStyles();
 

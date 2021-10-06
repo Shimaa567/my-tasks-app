@@ -1,26 +1,16 @@
 import React from 'react';
-import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
   Avatar,
   Card,
   CardContent,
   Grid,
-  Typography,
-  makeStyles
+  Typography
 } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    height: '100%'
-  },
-}));
-
 const FigureCard: React.FC<{title: any, value: any, avatarStyle: any, AvatarIcon: any}> = ({ title, value, avatarStyle, AvatarIcon,  ...rest }) => {
-  const classes = useStyles();
   return (
     <Card
-      className={clsx(classes.root)}
       {...rest}
     >
       <CardContent>
