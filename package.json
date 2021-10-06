@@ -1,6 +1,6 @@
 {
   "name": "sourcya-my-tasks-app",
-  "version": "0.9.1",
+  "version": "0.9.3",
   "private": true,
   "dependencies": {
     "@capacitor/android": "3.2.4",
