@@ -2,7 +2,7 @@
 docker run -ti --rm \
 -v $(pwd):/myApp:rw \
 -w /myApp \
-beevelop/ionic \
+mutasimissa/ionic-capacitor-android-build \
 bash -c " \
     rm -rf android && \
     rm -rf build && \
