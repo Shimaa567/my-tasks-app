@@ -6,6 +6,7 @@ beevelop/ionic:latest \
 bash -c " \
     rm -rf android && \
     rm -rf build && \
+    npm install && \
     ionic build && \
     ionic capacitor build android --no-open && \
     yes | /opt/android/tools/bin/sdkmanager --update && \
