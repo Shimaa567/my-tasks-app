@@ -1,19 +1,32 @@
-import React from 'react';
-import { ThemeProvider } from '@material-ui/core';
-import { Admin, Resource } from 'react-admin';
-import List from '@material-ui/icons/List';
+import React from "react";
+import { ThemeProvider } from "@material-ui/core";
+import { Admin } from "react-admin";
+//import List from "@material-ui/icons/List";
 
-import { theme, GlobalStyles } from './theme';
-import { dataProvider, authProvider } from './service';
+import { theme, GlobalStyles } from "./theme";
+import { dataProvider, authProvider } from "./service";
 
-import { NotFound } from './NotFound';
-import Home from './Home'
-import { TasksList } from './modules/tasks/TasksList';
-import { ShowTask } from './modules/tasks/ShowTask';
-import { EditTask } from './modules/tasks/EditTask';
-import { CreateTask } from './modules/tasks/CreateTask';
-import { Login }  from './Login';
+import { NotFound } from "./NotFound";
+import Home from "./Home";
+import TasksList from "./modules/items/TasksList";
+import ShowTask from "./modules/items/ShowTask";
+import EditTask from "./modules/items/EditTask";
+import CreateTask from "./modules/items/CreateTask";
+import { Login } from "./Login";
+import Tasks from "./Tasks";
 
+import { APIU, Cookies } from "./service";
+import axios from "axios";
+import customRoutes from "./customRoutes";
+
+const token = Cookies.getCookie("token");
+
+export const axiosInstance = axios.create({
+  baseURL: APIU,
+  headers: {
+    Authorization: "Bearer " + token,
+  },
+});
 const Dashboard: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
@@ -25,14 +38,24 @@ const Dashboard: React.FC = () => {
         catchAll={NotFound}
         loginPage={Login}
         dashboard={Home}
-        disableTelemetry >
-        <Resource
+        customRoutes={customRoutes}
+        disableTelemetry
+      >
+        {/* <Resource
           name="tasks"
           list={TasksList}
           show={ShowTask}
           create={CreateTask}
           edit={EditTask}
           icon={List}
+        /> */}
+        <Tasks
+          name="tasks"
+          axiosInstance={axiosInstance}
+          List={(props) => <TasksList {...props} />}
+          Show={(props) => <ShowTask {...props} />}
+          Create={(props) => <CreateTask {...props} />}
+          Edit={(props) => <EditTask {...props} />}
         />
       </Admin>
     </ThemeProvider>
@@ -40,3 +63,13 @@ const Dashboard: React.FC = () => {
 };
 
 export default Dashboard;
+
+// <Tasks
+// name="tasks"
+// axiosInstance={axiosInstance}
+// task={Tasks}
+// List={TasksList}
+// Show={ShowTask}
+// Create={CreateTask}
+// Edit={EditTask}
+// />
