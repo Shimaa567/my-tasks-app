@@ -46,10 +46,10 @@ const ShowTask = (props) => {
         <Link href="/tasks">Back to Tasks</Link>
         <List>
           <ListItem alignItems="flex-start">
-            {data ? (
+            {CurrentTask ? (
               <ListItemText
-                primary={data.title}
-                secondary={data.description}
+                primary={CurrentTask.title}
+                secondary={CurrentTask.description}
               ></ListItemText>
             ) : (
               <ListItemText

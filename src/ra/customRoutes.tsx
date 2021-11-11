@@ -22,7 +22,8 @@ export default [
     {/* <Route exact path={`/${name}`} render={() => <Tasks />} /> */}
     <Route
       exact
-      path={`/${name}`}
+      // path={`/${name}`}
+      path="/"
       render={() => <TasksList api={listItems} />}
     />
     <Route

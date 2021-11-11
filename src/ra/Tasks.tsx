@@ -1,21 +1,21 @@
 import React from "react";
 //import { useId } from "react-id-generator";
 import { axiosInstance } from "./Dashboard";
-import {
-  TextField,
-  Card,
-  Container,
-  FormControl,
-  Box,
-  Button,
-  Link,
-} from "@material-ui/core";
+// import {
+//   TextField,
+//   Card,
+//   Container,
+//   FormControl,
+//   Box,
+//   Button,
+//   Link,
+// } from "@material-ui/core";
 //import List from "@material-ui/icons/List";
 
-interface ReusableComponent {
+export interface ReusableComponent {
   api: any;
 }
-interface Props {
+export interface Props {
   name?: string;
   Create?: React.FC<ReusableComponent>;
   Edit?: React.FC<ReusableComponent>;
@@ -32,13 +32,7 @@ const Tasks: React.FC<Props> = ({
   List,
   Show,
 }) => {
-  return (
-    <div>
-      <Container>
-        <Button variant="text">My Tasks</Button>
-      </Container>
-    </div>
-  );
+  return <div></div>;
 };
 
 export default Tasks;
