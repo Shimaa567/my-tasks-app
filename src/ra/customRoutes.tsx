@@ -9,7 +9,8 @@ import TasksList from "./modules/items/TasksList";
 // import Tasks from "./Tasks";
 const name = "tasks";
 
-export const createItem = async () => await axiosInstance.post(`/${name}`, []);
+export const createItem = async (data) =>
+  await axiosInstance.post(`/${name}`, data);
 export const editItem = async ({ id }: { id: string }) =>
   await axiosInstance.put(`/${name}/${id}`);
 export const showItem = async ({ id }: { id: string }) =>

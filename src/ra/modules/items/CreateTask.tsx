@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
-import { useId, setPrefix } from "react-id-generator";
 import {
   Card,
   Container,
@@ -8,25 +7,46 @@ import {
   InputLabel,
   Input,
   FormHelperText,
+  FormControlLabel,
   Box,
-  Button,
+  RadioGroup,
   Link,
 } from "@material-ui/core";
+import { LoadingButton } from "@mui/lab";
 import Save from "@material-ui/icons/Save";
+import Radio from "@mui/material/Radio";
+import Checkbox from "@mui/material/Checkbox";
 
-setPrefix("_sourcya");
-
-const CreateTask = (props) => {
+const CreateTask = ({ api }) => {
   const history = useHistory();
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [status, setStatus] = useState("");
+  const [type, setType] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const [id] = useId();
-  const submitFormHandler = (e) => {
+  const submitFormHandler = async (e) => {
     e.preventDefault();
-    console.log(id, title, description);
-    history.push(`/tasks/${id}/show`);
+    // console.log(id, title, description);
+    // LOADING STATE
+    setLoading(true);
+    try {
+      const { data } = await api({ title, description, status, type });
+      // const { data } = await api({ title, description });
+      // SUCCESS STATE
+      setLoading(false);
+      history.push(`/tasks/${data.id}/show`);
+    } catch (error) {
+      // FAILURE STATE
+      setLoading(false);
+      // const message = error.response.data.message;
+      setError("Failed to create task, please try again!");
+      console.log(error);
+    }
   };
+
   return (
     <div>
       <Card>
@@ -37,6 +57,27 @@ const CreateTask = (props) => {
 
           <h2>Create a new Task</h2>
           <Box component="form">
+            <FormControl component="fieldset">
+              <RadioGroup
+                row
+                aria-label="type"
+                name="row-radio-buttons-group"
+                onChange={(e) => setType(e.target.value)}
+              >
+                <FormControlLabel
+                  value="personal"
+                  control={<Radio />}
+                  label="Personal"
+                />
+                <FormControlLabel
+                  value="work"
+                  control={<Radio />}
+                  label="Work"
+                />
+              </RadioGroup>
+            </FormControl>
+          </Box>
+          <Box>
             <FormControl variant="standard">
               <InputLabel htmlFor="title">Title*</InputLabel>
               <Input
@@ -59,15 +100,52 @@ const CreateTask = (props) => {
               </FormHelperText>
             </FormControl>
           </Box>
-
-          <Button
+          <Box style={{ margin: "10px 0 10px 0" }}>
+            <FormControl component="fieldset">
+              <RadioGroup
+                row
+                aria-label="status"
+                name="row-radio-buttons-group"
+                onChange={(e) => setStatus(e.target.value)}
+              >
+                <FormControlLabel
+                  value="pending"
+                  control={<Checkbox />}
+                  label="Pending"
+                />
+                <FormControlLabel
+                  value="in progress"
+                  control={<Checkbox />}
+                  label="In Progress"
+                />
+                <FormControlLabel
+                  value="done"
+                  control={<Checkbox />}
+                  label="Done"
+                />
+              </RadioGroup>
+            </FormControl>
+          </Box>
+          {error && <p>{error}</p>}
+          {/* <Button
             variant="outlined"
             startIcon={<Save />}
             style={{ marginTop: "30px", marginBottom: "20px" }}
             onClick={submitFormHandler}
           >
+            {loading ? "loading..." : "Save"}
+          </Button> */}
+          <LoadingButton
+            color="secondary"
+            style={{ marginTop: "20px" }}
+            onClick={submitFormHandler}
+            loading={loading}
+            loadingPosition="start"
+            startIcon={<Save />}
+            variant="contained"
+          >
             Save
-          </Button>
+          </LoadingButton>
         </Container>
       </Card>
     </div>

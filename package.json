@@ -15,6 +15,7 @@
     "@ionic/react": "^5.5.0",
     "@ionic/react-router": "^5.5.0",
     "@material-ui/lab": "^4.0.0-alpha.60",
+    "@mui/lab": "^5.0.0-alpha.54",
     "@mui/material": "^5.1.0",
     "@mui/styles": "^5.1.0",
     "@mui/x-data-grid": "^5.0.0-beta.7",
