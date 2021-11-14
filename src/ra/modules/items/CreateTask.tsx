@@ -1,3 +1,4 @@
+/* eslint-disable no-lone-blocks */
 import React, { useState } from "react";
 import { useHistory } from "react-router";
 import {
@@ -7,15 +8,12 @@ import {
   InputLabel,
   Input,
   FormHelperText,
-  FormControlLabel,
   Box,
-  RadioGroup,
   Link,
 } from "@material-ui/core";
 import { LoadingButton } from "@mui/lab";
 import Save from "@material-ui/icons/Save";
 import Radio from "@mui/material/Radio";
-import Checkbox from "@mui/material/Checkbox";
 
 const CreateTask = ({ api }) => {
   const history = useHistory();
@@ -29,7 +27,6 @@ const CreateTask = ({ api }) => {
 
   const submitFormHandler = async (e) => {
     e.preventDefault();
-    // console.log(id, title, description);
     // LOADING STATE
     setLoading(true);
     try {
@@ -56,26 +53,27 @@ const CreateTask = ({ api }) => {
           </Link>
 
           <h2>Create a new Task</h2>
-          <Box component="form">
-            <FormControl component="fieldset">
-              <RadioGroup
-                row
-                aria-label="type"
-                name="row-radio-buttons-group"
+          <Box>
+            <>
+              <Radio
+                checked={type === "personal"}
                 onChange={(e) => setType(e.target.value)}
-              >
-                <FormControlLabel
-                  value="personal"
-                  control={<Radio />}
-                  label="Personal"
-                />
-                <FormControlLabel
-                  value="work"
-                  control={<Radio />}
-                  label="Work"
-                />
-              </RadioGroup>
-            </FormControl>
+                value="personal"
+                name="radio-buttons"
+                inputProps={{ "aria-label": "personal" }}
+              />{" "}
+              Personal
+            </>
+            <>
+              <Radio
+                checked={type === "work"}
+                onChange={(e) => setType(e.target.value)}
+                value="work"
+                name="radio-buttons"
+                inputProps={{ "aria-label": "work" }}
+              />{" "}
+              Work
+            </>
           </Box>
           <Box>
             <FormControl variant="standard">
@@ -101,40 +99,39 @@ const CreateTask = ({ api }) => {
             </FormControl>
           </Box>
           <Box style={{ margin: "10px 0 10px 0" }}>
-            <FormControl component="fieldset">
-              <RadioGroup
-                row
-                aria-label="status"
-                name="row-radio-buttons-group"
+            <>
+              <Radio
+                checked={status === "Pending"}
                 onChange={(e) => setStatus(e.target.value)}
-              >
-                <FormControlLabel
-                  value="pending"
-                  control={<Checkbox />}
-                  label="Pending"
-                />
-                <FormControlLabel
-                  value="in progress"
-                  control={<Checkbox />}
-                  label="In Progress"
-                />
-                <FormControlLabel
-                  value="done"
-                  control={<Checkbox />}
-                  label="Done"
-                />
-              </RadioGroup>
-            </FormControl>
+                value="Pending"
+                name="radio-buttons"
+                inputProps={{ "aria-label": "Pending" }}
+              />{" "}
+              Pending
+            </>
+            <>
+              <Radio
+                checked={status === "InProgress"}
+                onChange={(e) => setStatus(e.target.value)}
+                value="InProgress"
+                name="radio-buttons"
+                inputProps={{ "aria-label": "InProgress" }}
+              />{" "}
+              In Progress
+            </>
+            <>
+              <Radio
+                checked={status === "Done"}
+                onChange={(e) => setStatus(e.target.value)}
+                value="Done"
+                name="radio-buttons"
+                inputProps={{ "aria-label": "Done" }}
+              />{" "}
+              Done
+            </>
           </Box>
           {error && <p>{error}</p>}
-          {/* <Button
-            variant="outlined"
-            startIcon={<Save />}
-            style={{ marginTop: "30px", marginBottom: "20px" }}
-            onClick={submitFormHandler}
-          >
-            {loading ? "loading..." : "Save"}
-          </Button> */}
+
           <LoadingButton
             color="secondary"
             style={{ marginTop: "20px" }}
@@ -153,3 +150,14 @@ const CreateTask = ({ api }) => {
 };
 
 export default CreateTask;
+
+{
+  /* <Button
+            variant="outlined"
+            startIcon={<Save />}
+            style={{ marginTop: "30px", marginBottom: "20px" }}
+            onClick={submitFormHandler}
+          >
+            {loading ? "loading..." : "Save"}
+          </Button> */
+}

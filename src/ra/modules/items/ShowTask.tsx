@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import { showItem } from "../../customRoutes";
 import {
   Card,
   Container,
@@ -9,58 +8,56 @@ import {
   ListItem,
   ListItemText,
 } from "@material-ui/core";
-import { useQuery } from "react-admin";
-//import { useDataProvider } from "react-admin";
 
-interface Params {
+export interface Params {
   id: string | undefined;
 }
-const ShowTask = (props) => {
+const ShowTask = ({ api }) => {
   const { id } = useParams<Params>();
-  //const dataProvider = useDataProvider();
 
-  const { data, loading, error } = useQuery({
-    type: "getOne",
-    resource: "tasks",
-    payload: { id },
-  });
-
-  const [CurrentTask, setCurrentTask] = useState<any>();
+  const [data, setData] = React.useState<any>();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    setCurrentTask(data);
-    // dataProvider
-    //   .getOne("tasks", { id })
-    //   .then(({ data }) => {
-    //     console.log(data);
-    //     setLoading(false);
-    //   })
-    //   .catch((error) => {
-    //     setError(error);
-    //     setLoading(false);
-    //   });
-  }, [data]);
+    try {
+      const fetchCurrentTask = async (id) => {
+        const { data } = await api({ id });
+        setData(data);
+        setLoading(false);
+      };
+      fetchCurrentTask(id);
+    } catch (error) {
+      setLoading(false);
+      setError("Error fetching data, please try again!");
+    }
+  }, [api, id]);
+
   return (
-    <Card>
-      <Container style={{ padding: "24px" }}>
-        <Link href="/tasks">Back to Tasks</Link>
-        <List>
-          <ListItem alignItems="flex-start">
-            {CurrentTask ? (
-              <ListItemText
-                primary={CurrentTask.title}
-                secondary={CurrentTask.description}
-              ></ListItemText>
-            ) : (
-              <ListItemText
-                primary="There's an error occurred"
-                secondary="Check your server"
-              ></ListItemText>
-            )}
-          </ListItem>
-        </List>
-      </Container>
-    </Card>
+    <>
+      {loading && <p>"Loading..."</p>}
+      {error && <p>{error}</p>}
+      <Card>
+        <Container style={{ padding: "24px" }}>
+          <Link href="/tasks">Back to Tasks</Link>
+          <List>
+            <ListItem alignItems="flex-start">
+              {data ? (
+                <ListItemText
+                  primary={data.title}
+                  secondary={data.description}
+                ></ListItemText>
+              ) : (
+                <ListItemText
+                  primary="There's an error occurred"
+                  secondary="Check your server"
+                ></ListItemText>
+              )}
+            </ListItem>
+          </List>
+        </Container>
+      </Card>
+    </>
   );
 };
 
