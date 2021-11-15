@@ -6,15 +6,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { useHistory } from "react-router";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
-//import { dataProvider } from "../../service";
 
-//import { useDemoData } from "@mui/x-data-grid-generator";
 const TasksList = ({ api }) => {
-  // const { data } = useDemoData({
-  //   dataSet: "Commodity",
-  //   rowLength: 1000,
-  //   maxColumns: 6,
-  // });
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
 

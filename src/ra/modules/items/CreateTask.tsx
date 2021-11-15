@@ -15,7 +15,7 @@ import { LoadingButton } from "@mui/lab";
 import Save from "@material-ui/icons/Save";
 import Radio from "@mui/material/Radio";
 
-const CreateTask = ({ api }) => {
+const CreateTask = ({ api, name }) => {
   const history = useHistory();
 
   const [title, setTitle] = useState("");
@@ -31,7 +31,6 @@ const CreateTask = ({ api }) => {
     setLoading(true);
     try {
       const { data } = await api({ title, description, status, type });
-      // const { data } = await api({ title, description });
       // SUCCESS STATE
       setLoading(false);
       history.push(`/tasks/${data.id}/show`);

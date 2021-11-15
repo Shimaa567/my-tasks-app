@@ -10,6 +10,8 @@ import {
   Box,
 } from "@material-ui/core";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useDataProvider } from "ra-core";
+//import { useGetOne } from "ra-core";
 
 export interface Params {
   id: string | undefined;
@@ -17,23 +19,38 @@ export interface Params {
 const ShowTask = ({ api }) => {
   const { id } = useParams<Params>();
 
+  // const { data, loading, error } = useGetOne("tasks", id);
+  // console.log(data);
+
   const [data, setData] = React.useState<any>();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const dataProvider = useDataProvider();
 
   useEffect(() => {
-    try {
-      const fetchCurrentTask = async (id) => {
-        const { data } = await api({ id });
-        setData(data);
-        setLoading(false);
-      };
-      fetchCurrentTask(id);
-    } catch (error) {
+    dataProvider.getOne("tasks", { id: `${id}` }).then((res) => {
+      setData(res.data);
       setLoading(false);
-      setError("Error fetching data, please try again!");
-    }
-  }, [api, id]);
+    });
+  }, [dataProvider, id]);
+
+  // const [data, setData] = React.useState<any>();
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState("");
+
+  // useEffect(() => {
+  //   try {
+  //     const fetchCurrentTask = async (id) => {
+  //       const { data } = await api({ id });
+  //       setData(data);
+  //       setLoading(false);
+  //     };
+  //     fetchCurrentTask(id);
+  //   } catch (error) {
+  //     setLoading(false);
+  //     setError("Error fetching data, please try again!");
+  //   }
+  // }, [api, id]);
 
   return (
     <>

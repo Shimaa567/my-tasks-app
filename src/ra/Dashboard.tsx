@@ -54,7 +54,7 @@ const Dashboard: React.FC = () => {
           axiosInstance={axiosInstance}
           List={(props) => <TasksList {...props} />}
           Show={(props) => <ShowTask {...props} />}
-          Create={(props) => <CreateTask {...props} />}
+          Create={(props) => <CreateTask name="tasks" {...props} />}
           Edit={(props) => <EditTask {...props} />}
         />
       </Admin>

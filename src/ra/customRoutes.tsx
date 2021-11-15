@@ -6,6 +6,7 @@ import CreateTask from "./modules/items/CreateTask";
 import EditTask from "./modules/items/EditTask";
 import ShowTask from "./modules/items/ShowTask";
 import TasksList from "./modules/items/TasksList";
+//import { dataProvider } from "./service";
 // import Tasks from "./Tasks";
 const name = "tasks";
 
@@ -22,6 +23,10 @@ export const listItems = async () => await axiosInstance.get(`/${name}`);
 
 export const deleteItem = async ({ index }) =>
   await axiosInstance.delete(`/${name}/${index}`);
+
+// export const createTask = async (data) =>
+//   await dataProvider.create(`${name}`, data);
+
 export default [
   <Router>
     <Route
@@ -33,7 +38,7 @@ export default [
     <Route
       exact
       path={`/${name}/create`}
-      render={() => <CreateTask api={createItem} />}
+      render={() => <CreateTask api={createItem} name={name} />}
     />
     <Route
       exact
