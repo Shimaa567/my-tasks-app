@@ -20,13 +20,10 @@ export const showItem = async ({ id }: { id: string }) =>
 
 export const listItems = async () => await axiosInstance.get(`/${name}`);
 
-export const deleteItem = async ({ id }: { id: string }) =>
-  await axiosInstance.delete(`/${name}/${id}`);
-//const history = createHashHistory();
+export const deleteItem = async ({ index }) =>
+  await axiosInstance.delete(`/${name}/${index}`);
 export default [
   <Router>
-    {/* <Route exact path="/" render={() => <Home />} /> */}
-    {/* <Route exact path={`/${name}`} render={() => <Tasks />} /> */}
     <Route
       exact
       // path={`/${name}`}

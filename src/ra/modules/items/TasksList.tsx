@@ -46,14 +46,16 @@ const TasksList = ({ api }) => {
   };
 
   const DeleteHandler = ({ index }) => {
-    const deleteItemHandler = () => {
-      // if (window.confirm("Are you sure you want to delete this Item ?")) {
-      //   console.log(index);
-      //   //dataProvider.delete(`${name}`, { index });
-      //   api.deleteItem({ index });
-      //   //history.push("/");
-      // }
-      api.deleteItem({ index });
+    const deleteItemHandler = async () => {
+      if (window.confirm("Are you sure you want to delete this Item ?")) {
+        console.log(index);
+        //   //dataProvider.delete(`${name}`, { index });
+        await api.deleteItem({ index });
+      }
+      history.push("/");
+      console.log(index);
+
+      //api.deleteItem({ index });
     };
     return (
       <FormControlLabel
