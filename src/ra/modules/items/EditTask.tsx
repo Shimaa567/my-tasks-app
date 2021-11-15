@@ -15,7 +15,7 @@ import Save from "@material-ui/icons/Save";
 import Radio from "@mui/material/Radio";
 import { Params } from "./ShowTask";
 
-const EditTask = ({ api }) => {
+const EditTask = ({ api, name }) => {
   const { id } = useParams<Params>();
   const history = useHistory();
 

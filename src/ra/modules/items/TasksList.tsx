@@ -6,22 +6,32 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { useHistory } from "react-router";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { useDataProvider, useNotify } from "ra-core";
+import { type } from "os";
 
-const TasksList = ({ api }) => {
-  const [data, setData] = React.useState([]);
+const TasksList = ({ api, name }) => {
+  const [data, setData] = React.useState<any[]>([]);
   const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState("");
 
-  const name = "tasks";
   const history = useHistory();
+  const dataProvider = useDataProvider();
+  const notify = useNotify();
 
   React.useEffect(() => {
-    const listData = async () => {
-      const { data } = await api.listItems();
-      setData(data);
-      setLoading(false);
-    };
-    listData();
-  }, [api]);
+    dataProvider
+      .getList(`${name}`, {
+        pagination: { page: 1, perPage: 10 },
+        sort: { field: "title", order: "ASC" },
+        filter: {},
+      })
+      .then((response) => {
+        setData(response.data);
+      })
+
+      .catch((error) => setError(error))
+      .finally(() => setLoading(false));
+  }, [dataProvider, name]);
 
   const EditHandler = ({ index }) => {
     const editItemHandler = () => history.push(`/${name}/${index}/edit`);
@@ -40,13 +50,25 @@ const TasksList = ({ api }) => {
 
   const DeleteHandler = ({ index }) => {
     const deleteItemHandler = async () => {
+      const id = index;
       if (window.confirm("Are you sure you want to delete this Item ?")) {
         console.log(index);
-        //   //dataProvider.delete(`${name}`, { index });
-        await api.deleteItem({ index });
+        setLoading(true);
+        dataProvider
+          .delete(`${name}`, {
+            id: `${id}`,
+            previousData: { id: `${id}` },
+          })
+          .then((response) => {
+            const newData = data.filter((x) => id === x.id);
+            setData(newData);
+            setLoading(false);
+            notify(`Successfully Deleted`, { type: "success" });
+          })
+          .catch((err) => setError(err))
+          .finally(() => setLoading(false));
+        // await api.deleteItem({ index });
       }
-      history.push("/");
-      console.log(index);
 
       //api.deleteItem({ index });
     };
@@ -116,20 +138,16 @@ const TasksList = ({ api }) => {
       </div>
     </>
   );
+  // <List>
+  //   {data.map((item) => (
+  //     <>
+  //       <ListItem>{item.title}</ListItem>
+  //       <ListItem>{item.description}</ListItem>
+  //       <ListItem>{item.type}</ListItem>
+  //       <ListItem>{item.status}</ListItem>
+  //     </>
+  //   ))}
+  // </List>
 };
 
 export default TasksList;
-
-// {field: 'actions', type: "actions", getActions: (params) => [
-//   <GridActionsCellItem
-//   icon={<EditIcon />}
-//   label="Edit"
-//   onClick={editItem(params.id)}
-//   showInMenu
-// />,
-// <GridActionsCellItem
-//   icon={<DeleteIcon />}
-//   label="Delete"
-//   onClick={deleteItem(params.id)}
-// />,
-// ]}

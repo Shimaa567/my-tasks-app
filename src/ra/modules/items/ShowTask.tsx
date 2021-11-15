@@ -16,27 +16,21 @@ import { useDataProvider } from "ra-core";
 export interface Params {
   id: string | undefined;
 }
-const ShowTask = ({ api }) => {
+const ShowTask = ({ api, name }) => {
   const { id } = useParams<Params>();
-
-  // const { data, loading, error } = useGetOne("tasks", id);
-  // console.log(data);
 
   const [data, setData] = React.useState<any>();
   const [loading, setLoading] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState("");
   const dataProvider = useDataProvider();
 
   useEffect(() => {
-    dataProvider.getOne("tasks", { id: `${id}` }).then((res) => {
+    dataProvider.getOne(`${name}`, { id: `${id}` }).then((res) => {
       setData(res.data);
       setLoading(false);
     });
-  }, [dataProvider, id]);
-
-  // const [data, setData] = React.useState<any>();
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState("");
+  }, [dataProvider, id, name]);
 
   // useEffect(() => {
   //   try {

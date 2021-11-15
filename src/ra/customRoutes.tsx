@@ -33,7 +33,7 @@ export default [
       exact
       // path={`/${name}`}
       path="/"
-      render={() => <TasksList api={{ listItems, deleteItem }} />}
+      render={() => <TasksList api={{ listItems, deleteItem }} name={name} />}
     />
     <Route
       exact
@@ -43,12 +43,12 @@ export default [
     <Route
       exact
       path={`/${name}/:id/show`}
-      render={() => <ShowTask api={showItem} />}
+      render={() => <ShowTask api={showItem} name={name} />}
     />
     <Route
       exact
       path={`/${name}/:id/edit`}
-      render={() => <EditTask api={{ editItem, showItem }} />}
+      render={() => <EditTask api={{ editItem, showItem }} name={name} />}
     />
   </Router>,
 ];

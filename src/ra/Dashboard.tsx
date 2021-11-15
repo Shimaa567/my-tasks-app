@@ -52,10 +52,10 @@ const Dashboard: React.FC = () => {
         <Tasks
           name="tasks"
           axiosInstance={axiosInstance}
-          List={(props) => <TasksList {...props} />}
-          Show={(props) => <ShowTask {...props} />}
+          List={(props) => <TasksList name="tasks" {...props} />}
+          Show={(props) => <ShowTask name="tasks" {...props} />}
           Create={(props) => <CreateTask name="tasks" {...props} />}
-          Edit={(props) => <EditTask {...props} />}
+          Edit={(props) => <EditTask name="tasks" {...props} />}
         />
       </Admin>
     </ThemeProvider>
