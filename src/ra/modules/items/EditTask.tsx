@@ -23,39 +23,31 @@ const EditTask = ({ api }) => {
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("");
   const [type, setType] = useState("");
-  const [data, setData] = useState<any>("");
+  //const [data, setData] = useState<any>("");
   const [loading, setLoading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState("");
 
-  const fetchTask = React.useCallback(
-    async (id) => {
+  React.useEffect(() => {
+    const fetchTask = async () => {
       setLoading(true);
-      const { data } = await api({ id });
+      const { data } = await api.showItem({ id });
       setLoading(false);
 
-      setData(data);
-    },
-    [api, setData]
-  );
+      setTitle(data.title);
+      setDescription(data.description);
+      setStatus(data.status);
+      setType(data.type);
+      console.log(data);
+    };
+    fetchTask();
+  }, [api, id]);
 
-  React.useEffect(() => {
-    fetchTask(id);
-    // if (
-    //   data.title !== title ||
-    //   data.description !== description ||
-    //   data.status !== status ||
-    //   data.type !== type
-    // ) {
-    //   setTitle(title);
-    //   setDescription(description);
-    //   setStatus(status);
-    //   setType(type);
-    // }
-  }, [fetchTask, id]);
-
-  const updateHandler = (e) => {
+  const updateHandler = async (e) => {
     e.preventDefault();
-
+    let data = { title, description, status, type };
+    await api.editItem({ id, data });
+    console.log(data);
     history.push(`/tasks/${id}/show`);
   };
 
@@ -165,3 +157,15 @@ const EditTask = ({ api }) => {
 };
 
 export default EditTask;
+
+// if (
+//   data.title !== title ||
+//   data.description !== description ||
+//   data.status !== status ||
+//   data.type !== type
+// ) {
+//   setTitle(title);
+//   setDescription(description);
+//   setStatus(status);
+//   setType(type);
+// }

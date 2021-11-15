@@ -7,7 +7,9 @@ import {
   List,
   ListItem,
   ListItemText,
+  Box,
 } from "@material-ui/core";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export interface Params {
   id: string | undefined;
@@ -35,10 +37,14 @@ const ShowTask = ({ api }) => {
 
   return (
     <>
-      {loading && <p>"Loading..."</p>}
-      {error && <p>{error}</p>}
       <Card>
         <Container style={{ padding: "24px" }}>
+          {loading && (
+            <Box sx={{ display: "flex" }}>
+              <CircularProgress style={{ margin: "auto" }} />
+            </Box>
+          )}
+          {error && <p>{error}</p>}
           <Link href="/tasks">Back to Tasks</Link>
           <List>
             <ListItem alignItems="flex-start">

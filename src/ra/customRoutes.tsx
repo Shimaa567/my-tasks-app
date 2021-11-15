@@ -11,11 +11,17 @@ const name = "tasks";
 
 export const createItem = async (data) =>
   await axiosInstance.post(`/${name}`, data);
-export const editItem = async ({ id }: { id: string }) =>
-  await axiosInstance.put(`/${name}/${id}`);
+
+export const editItem = async ({ id, data }: { id: string; data: any }) =>
+  await axiosInstance.put(`/${name}/${id}`, data);
+
 export const showItem = async ({ id }: { id: string }) =>
   await axiosInstance.get(`/${name}/${id}`);
+
 export const listItems = async () => await axiosInstance.get(`/${name}`);
+
+export const deleteItem = async ({ id }: { id: string }) =>
+  await axiosInstance.delete(`/${name}/${id}`);
 //const history = createHashHistory();
 export default [
   <Router>
@@ -25,7 +31,7 @@ export default [
       exact
       // path={`/${name}`}
       path="/"
-      render={() => <TasksList api={listItems} />}
+      render={() => <TasksList api={{ listItems, deleteItem }} />}
     />
     <Route
       exact
@@ -40,7 +46,7 @@ export default [
     <Route
       exact
       path={`/${name}/:id/edit`}
-      render={() => <EditTask api={editItem} />}
+      render={() => <EditTask api={{ editItem, showItem }} />}
     />
   </Router>,
 ];
