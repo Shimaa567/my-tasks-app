@@ -14,19 +14,8 @@ import EditTask from "./modules/items/EditTask";
 import CreateTask from "./modules/items/CreateTask";
 import { Login } from "./Login";
 import Tasks from "./Tasks";
-
-import { APIU, Cookies } from "./service";
-import axios from "axios";
 import customRoutes from "./customRoutes";
 
-const token = Cookies.getCookie("token");
-
-export const axiosInstance = axios.create({
-  baseURL: APIU,
-  headers: {
-    Authorization: "Bearer " + token,
-  },
-});
 const Dashboard: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
@@ -51,7 +40,6 @@ const Dashboard: React.FC = () => {
         /> */}
         <Tasks
           name="tasks"
-          axiosInstance={axiosInstance}
           List={(props) => <TasksList name="tasks" {...props} />}
           Show={(props) => <ShowTask name="tasks" {...props} />}
           Create={(props) => <CreateTask name="tasks" {...props} />}

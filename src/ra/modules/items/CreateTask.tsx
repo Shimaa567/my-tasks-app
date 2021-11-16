@@ -14,9 +14,12 @@ import {
 import { LoadingButton } from "@mui/lab";
 import Save from "@material-ui/icons/Save";
 import Radio from "@mui/material/Radio";
+import { useDataProvider, useNotify } from "ra-core";
 
-const CreateTask = ({ api, name }) => {
+const CreateTask = ({ name }) => {
   const history = useHistory();
+  const dataProvider = useDataProvider();
+  const notify = useNotify();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -29,18 +32,36 @@ const CreateTask = ({ api, name }) => {
     e.preventDefault();
     // LOADING STATE
     setLoading(true);
-    try {
-      const { data } = await api({ title, description, status, type });
-      // SUCCESS STATE
-      setLoading(false);
-      history.push(`/tasks/${data.id}/show`);
-    } catch (error) {
-      // FAILURE STATE
-      setLoading(false);
-      // const message = error.response.data.message;
-      setError("Failed to create task, please try again!");
-      console.log(error);
-    }
+
+    dataProvider
+      .create(`${name}`, { data: { title, description, status, type } })
+      .then(({ data }) => {
+        setTitle(data.title);
+        setDescription(data.description);
+        setStatus(data.status);
+        setType(data.type);
+        notify(`Successfully Created !`, { type: "success" });
+        history.push(`/${name}/${data.id}/show`);
+      })
+      .catch((err) => {
+        setError(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+
+    // try {
+    //   const { data } = await api({ title, description, status, type });
+    //   // SUCCESS STATE
+    //   setLoading(false);
+    //   history.push(`/tasks/${data.id}/show`);
+    // } catch (error) {
+    //   // FAILURE STATE
+    //   setLoading(false);
+    //   // const message = error.response.data.message;
+    //   setError("Failed to create task, please try again!");
+    //   console.log(error);
+    // }
   };
 
   return (

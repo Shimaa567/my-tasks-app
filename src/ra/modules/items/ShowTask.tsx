@@ -16,7 +16,7 @@ import { useDataProvider } from "ra-core";
 export interface Params {
   id: string | undefined;
 }
-const ShowTask = ({ api, name }) => {
+const ShowTask = ({ name }) => {
   const { id } = useParams<Params>();
 
   const [data, setData] = React.useState<any>();
@@ -32,25 +32,11 @@ const ShowTask = ({ api, name }) => {
     });
   }, [dataProvider, id, name]);
 
-  // useEffect(() => {
-  //   try {
-  //     const fetchCurrentTask = async (id) => {
-  //       const { data } = await api({ id });
-  //       setData(data);
-  //       setLoading(false);
-  //     };
-  //     fetchCurrentTask(id);
-  //   } catch (error) {
-  //     setLoading(false);
-  //     setError("Error fetching data, please try again!");
-  //   }
-  // }, [api, id]);
-
   return (
     <>
       <Card>
         <Container style={{ padding: "24px" }}>
-          {loading && (
+          {loading && !data && (
             <Box sx={{ display: "flex" }}>
               <CircularProgress style={{ margin: "auto" }} />
             </Box>

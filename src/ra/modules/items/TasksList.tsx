@@ -7,9 +7,8 @@ import { useHistory } from "react-router";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { useDataProvider, useNotify } from "ra-core";
-import { type } from "os";
 
-const TasksList = ({ api, name }) => {
+const TasksList = ({ name }) => {
   const [data, setData] = React.useState<any[]>([]);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState("");
@@ -97,6 +96,7 @@ const TasksList = ({ api, name }) => {
         </Button>
       </Box>
       <div style={{ height: 400, width: "100%", marginTop: "30px" }}>
+        {error && <p>{error}</p>}
         {loading ? (
           <Box sx={{ display: "flex" }}>
             <CircularProgress style={{ margin: "auto" }} />
