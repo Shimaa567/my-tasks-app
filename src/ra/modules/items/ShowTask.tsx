@@ -8,10 +8,9 @@ import {
   ListItem,
   ListItemText,
   Box,
+  CircularProgress,
 } from "@material-ui/core";
-import CircularProgress from "@mui/material/CircularProgress";
 import { useDataProvider } from "ra-core";
-//import { useGetOne } from "ra-core";
 
 export interface Params {
   id: string | undefined;

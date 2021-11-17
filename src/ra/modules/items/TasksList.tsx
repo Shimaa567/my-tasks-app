@@ -1,8 +1,13 @@
 import React from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { Box, Button, FormControlLabel, IconButton } from "@material-ui/core";
+import {
+  Box,
+  Button,
+  FormControlLabel,
+  IconButton,
+  CircularProgress,
+} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
-import CircularProgress from "@mui/material/CircularProgress";
 import { useHistory } from "react-router";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -24,9 +29,7 @@ const TasksList = ({ name }) => {
         sort: { field: "title", order: "ASC" },
         filter: {},
       })
-      .then((response) => {
-        setData(response.data);
-      })
+      .then((response) => setData(response.data))
 
       .catch((error) => setError(error))
       .finally(() => setLoading(false));
