@@ -50,7 +50,7 @@ export const Login: React.FC = () => {
     login: {
       display: "flex",
       flexDirection: "column",
-      minHeight: "100vh",
+      // minHeight: "100vh",
       alignItems: "center",
       justifyContent: "flex-start",
       //background: "url(https://source.unsplash.com/Qh6yUFl7P5E/1600x900)",
@@ -131,6 +131,7 @@ export const Login: React.FC = () => {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
+      backgroundColor: "#FFFFFF",
       justifyContent: "flex-start",
     },
     card: {
@@ -273,98 +274,329 @@ export const Login: React.FC = () => {
   return (
     <>
       <div className={classes.login}>
-        <div className={classes.loginContainer}>
-          <div className={classes.loginRect1}>
-            <div className={classes.loginRightSide}>
-              <img
-                className={classes.loginImg}
-                src={LoginImg}
-                alt="loginImage"
-              />
-              <p className={classes.loginHead}>Lorem, ipsum dolor sit </p>
-              <div className={classes.ellipsis}>
-                <span>
-                  <FiberManualRecordIcon />
-                </span>
-                <span>
-                  <FiberManualRecordOutlinedIcon />
-                </span>
-                <span>
-                  <FiberManualRecordOutlinedIcon />
-                </span>
-                <span>
-                  <FiberManualRecordOutlinedIcon />
-                </span>
+        {!signupDialog && (
+          <div className={classes.loginContainer}>
+            <div className={classes.loginRect1}>
+              <div className={classes.loginRightSide}>
+                <img
+                  className={classes.loginImg}
+                  src={LoginImg}
+                  alt="loginImage"
+                />
+                <p className={classes.loginHead}>Lorem, ipsum dolor sit </p>
+                <div className={classes.ellipsis}>
+                  <span>
+                    <FiberManualRecordIcon />
+                  </span>
+                  <span>
+                    <FiberManualRecordOutlinedIcon />
+                  </span>
+                  <span>
+                    <FiberManualRecordOutlinedIcon />
+                  </span>
+                  <span>
+                    <FiberManualRecordOutlinedIcon />
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className={classes.loginRect2}>
+              <div className={classes.loginLeftSide}>
+                <p className={classes.loginHead2}>Login to your Account</p>
+                <form
+                  className={classes.form}
+                  onSubmit={(e) => handleLogin(e)}
+                  noValidate
+                >
+                  <TextField
+                    variant="outlined"
+                    className={classes.input}
+                    type="text"
+                    placeholder="User Name or Email"
+                    style={{ marginBottom: "1em" }}
+                    fullWidth
+                    required
+                    id="username"
+                    label={translate("ra.auth.username")}
+                    // label="Name or Email"
+                    value={loginData.username}
+                    onChange={(e) =>
+                      setLoginData({ ...loginData, username: e.target.value })
+                    }
+                    disabled={loading}
+                  />
+
+                  <OutlinedInput
+                    id="outlined-adornment-password"
+                    className={classes.input}
+                    onChange={(e) => {
+                      handleChange("password");
+                      setLoginData({ ...loginData, password: e.target.value });
+                    }}
+                    type={passwordValues.showPassword ? "text" : "password"}
+                    fullWidth
+                    required
+                    // id="password"
+                    label={translate("ra.auth.password")}
+                    //label="Password"
+                    value={loginData.password}
+                    disabled={loading}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          // onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {passwordValues.showPassword ? (
+                            <VisibilityOff />
+                          ) : (
+                            <Visibility />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    placeholder="Password"
+                  />
+
+                  <div style={{ margin: "10px 0" }}>
+                    <Checkbox sx={{ padding: "9px 0" }} />
+                    <span className={classes.checkboxLabel}>Remember me</span>
+                    <span
+                      className={classes.checkboxLabel}
+                      style={{ paddingLeft: "45px" }}
+                    >
+                      Forget your password ?
+                    </span>
+                  </div>
+                  <Button
+                    className={classes.button}
+                    variant="contained"
+                    type="submit"
+                    color="primary"
+                    disabled={loading}
+                    fullWidth
+                  >
+                    {loading && <CircularProgress size={25} thickness={2} />}
+                    {translate("ra.auth.sign_in")}
+                  </Button>
+
+                  <div className={classes.registeration}>
+                    <span>
+                      Don't have an account yet?&nbsp;
+                      <a
+                        href="/signup"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setSignupDialog(true);
+                        }}
+                      >
+                        Sign Up
+                      </a>
+                    </span>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
-          <div className={classes.loginRect2}>
-            <div className={classes.loginLeftSide}>
-              <p className={classes.loginHead2}>Login to your Account</p>
-              <form className={classes.form}>
-                <TextField
-                  id="outlined-basic"
-                  variant="outlined"
-                  className={classes.input}
-                  type="text"
-                  placeholder="User Name or Email"
-                  style={{ marginBottom: "1em" }}
+        )}
+      </div>
+      <div className={classes.register}>
+        {signupDialog && (
+          <div className={classes.loginContainer}>
+            <div className={classes.loginRect1}>
+              <div className={classes.loginRightSide}>
+                <img
+                  className={classes.loginImg}
+                  src={LoginImg}
+                  alt="loginImage"
                 />
-
-                <OutlinedInput
-                  id="outlined-adornment-password"
-                  className={classes.input}
-                  onChange={handleChange("password")}
-                  type={passwordValues.showPassword ? "text" : "password"}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        // onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {passwordValues.showPassword ? (
-                          <VisibilityOff />
-                        ) : (
-                          <Visibility />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  placeholder="Password"
-                />
-
-                <div style={{ margin: "10px 0" }}>
-                  <Checkbox sx={{ padding: "9px 0" }} />
-                  <span className={classes.checkboxLabel}>Remember me</span>
-                  <span
-                    className={classes.checkboxLabel}
-                    style={{ paddingLeft: "45px" }}
-                  >
-                    Forget your password ?
-                  </span>
-                </div>
-                <Button className={classes.button}>Login</Button>
-
-                <div className={classes.registeration}>
+                <p className={classes.loginHead}>Lorem, ipsum dolor sit </p>
+                <div className={classes.ellipsis}>
                   <span>
-                    Don't have an account yet?&nbsp;
-                    <a
-                      href="/signup"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setSignupDialog(true);
-                      }}
-                    >
-                      Sign Up
-                    </a>
+                    <FiberManualRecordIcon />
+                  </span>
+                  <span>
+                    <FiberManualRecordOutlinedIcon />
+                  </span>
+                  <span>
+                    <FiberManualRecordOutlinedIcon />
+                  </span>
+                  <span>
+                    <FiberManualRecordOutlinedIcon />
                   </span>
                 </div>
-              </form>
+              </div>
+            </div>
+            <div className={classes.loginRect2} style={{ marginTop: "110px" }}>
+              <div className={classes.loginLeftSide}>
+                <p className={classes.loginHead2}>Create new Account</p>
+                <form
+                  className={classes.form}
+                  onSubmit={(e) => handleRegister(e)}
+                  noValidate
+                >
+                  <TextField
+                    variant="outlined"
+                    className={classes.input}
+                    type="text"
+                    placeholder="First Name"
+                    style={{ marginBottom: "1em" }}
+                    fullWidth
+                    required
+                    id="username"
+                    //label={translate("ra.auth.username")}
+                    label="First Name"
+                    value={registerData.username}
+                    onChange={(e) =>
+                      setRegisterData({
+                        ...registerData,
+                        username: e.target.value,
+                      })
+                    }
+                    disabled={loading}
+                  />
+                  <TextField
+                    variant="outlined"
+                    className={classes.input}
+                    type="text"
+                    placeholder="Last Name"
+                    style={{ marginBottom: "1em" }}
+                    fullWidth
+                    required
+                    id="username"
+                    //label={translate("ra.auth.username")}
+                    label="Last Name"
+                    value={registerData.username}
+                    onChange={(e) =>
+                      setRegisterData({
+                        ...registerData,
+                        username: e.target.value,
+                      })
+                    }
+                    disabled={loading}
+                  />
+                  {/* <div className={classes.input}> */}
+                  <TextField
+                    fullWidth
+                    required
+                    className={classes.input}
+                    id="email"
+                    label="Email"
+                    variant="outlined"
+                    placeholder="Email"
+                    value={registerData.email}
+                    onChange={(e) =>
+                      setRegisterData({
+                        ...registerData,
+                        email: e.target.value,
+                      })
+                    }
+                    style={{ marginBottom: "1em" }}
+                    type="email"
+                    disabled={loading}
+                  />
+                  {/* </div> */}
+                  <OutlinedInput
+                    // id="outlined-adornment-password"
+                    className={classes.input}
+                    type={passwordValues.showPassword ? "text" : "password"}
+                    fullWidth
+                    required
+                    id="password"
+                    label={translate("ra.auth.password")}
+                    value={registerData.password}
+                    onChange={(e) => {
+                      handleChange("password");
+                      setRegisterData({
+                        ...registerData,
+                        password: e.target.value,
+                      });
+                    }}
+                    disabled={loading}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          // onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {passwordValues.showPassword ? (
+                            <VisibilityOff />
+                          ) : (
+                            <Visibility />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    placeholder="Password"
+                  />
+
+                  <div style={{ margin: "10px 0" }}>
+                    <Checkbox sx={{ padding: "9px 0" }} />
+                    <span className={classes.checkboxLabel}>
+                      I agree to DataXlens{" "}
+                      <a
+                        href="/"
+                        // onClick={(e) => {
+                        //   e.preventDefault();
+                        //   setSignupDialog(false);
+                        // }}
+                      >
+                        Privacy
+                      </a>{" "}
+                      and
+                      <a
+                        href="/"
+                        // onClick={(e) => {
+                        //   e.preventDefault();
+                        //   setSignupDialog(false);
+                        // }}
+                      >
+                        terms of use
+                      </a>
+                    </span>
+                    {/* <span
+                      className={classes.checkboxLabel}
+                      style={{ paddingLeft: "45px" }}
+                    >
+                      Forget your password ?
+                    </span> */}
+                  </div>
+                  <Button
+                    className={classes.button}
+                    variant="contained"
+                    type="submit"
+                    color="primary"
+                    disabled={loading}
+                    fullWidth
+                  >
+                    {loading && <CircularProgress size={25} thickness={2} />}
+                    {/* {translate("ra.auth.sign_in")} */}
+                    Sing Up
+                  </Button>
+
+                  <div className={classes.registeration}>
+                    <span>
+                      You already have an account?&nbsp;
+                      <a
+                        href="/signup"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setSignupDialog(false);
+                        }}
+                      >
+                        Login
+                      </a>
+                    </span>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
       <Notification />
     </>
