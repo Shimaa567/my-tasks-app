@@ -7,27 +7,20 @@ import { theme } from "./theme";
 import { APIU } from "./service";
 import LoginImg from "./assets/images/login.svg";
 import {
-  Dialog,
   Button,
-  Card,
-  CardActions,
   CircularProgress,
   TextField,
   IconButton,
   makeStyles,
+  useMediaQuery,
 } from "@material-ui/core";
 import FiberManualRecordOutlinedIcon from "@mui/icons-material/FiberManualRecordOutlined";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { Notification, useTranslate, useLogin, useNotify } from "react-admin";
-import {
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
-  InputAdornment,
-  OutlinedInput,
-} from "@mui/material";
+import { Checkbox, InputAdornment, OutlinedInput } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import FullScreenDialog from "../components/FullDialog";
 
 export const Login: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -42,15 +35,22 @@ export const Login: React.FC = () => {
     showPassword: false,
   });
   const [signupDialog, setSignupDialog] = useState(false);
+  //const [isOpen, setIsOpen] = useState(false);
+
   const translate = useTranslate();
   const notify = useNotify();
   const login = useLogin();
   const location = useLocation<{ nextPathname: string } | null>();
+
+  const isSmall = useMediaQuery((theme: any) =>
+    theme.breakpoints.between("xs", "sm")
+  );
+  const isDesktop = useMediaQuery((theme: any) => theme.breakpoints.up("md"));
+
   const useStyles = makeStyles({
     login: {
       display: "flex",
       flexDirection: "column",
-      // minHeight: "100vh",
       alignItems: "center",
       justifyContent: "flex-start",
       //background: "url(https://source.unsplash.com/Qh6yUFl7P5E/1600x900)",
@@ -99,6 +99,14 @@ export const Login: React.FC = () => {
       lineHeight: "37px",
       display: "flex",
       alignItems: "center",
+      textAlign: "center",
+      color: "#000000",
+    },
+    loginHeadSm: {
+      fontFamily: "Ubuntu",
+      fontStyle: "normal",
+      fontWeight: "normal",
+      fontSize: "32px",
       textAlign: "center",
       color: "#000000",
     },
@@ -152,7 +160,7 @@ export const Login: React.FC = () => {
       color: theme.palette.grey[500],
     },
     form: {
-      padding: "0 1em 1em 1em",
+      padding: "1em 1em 1em 1em",
       position: "absolute",
       top: "100px",
     },
@@ -194,6 +202,26 @@ export const Login: React.FC = () => {
       top: "560px",
       color: "#828282",
       display: "flex",
+    },
+    ellipsisSm: {
+      color: "#FFA600",
+      display: "flex",
+      justifyContent: "center",
+      margin: "35px",
+    },
+    actionButtons: {
+      display: "flex",
+      justifyContent: "space-around",
+      marginTop: "220px",
+    },
+    subBtn: {
+      width: "145px",
+      height: "48px",
+      backgroundColor: "#13A4F1",
+      borderRadius: "35px",
+      color: "#FFFFFF",
+      fontFamily: "Ubuntu",
+      fontSize: "16px",
     },
   });
   const classes = useStyles();
@@ -262,6 +290,8 @@ export const Login: React.FC = () => {
     );
   };
 
+  //const handleOpenDialog = () => (setIsOpen(!isOpen))
+
   const handleClickShowPassword = () => {
     setPasswordValues({
       ...passwordValues,
@@ -272,9 +302,57 @@ export const Login: React.FC = () => {
     setPasswordValues({ ...passwordValues, [prop]: event.target.value });
   };
   return (
-    <>
+    <div style={{ height: "100%", backgroundColor: "#FFFFFF" }}>
       <div className={classes.login}>
-        {!signupDialog && (
+        {isSmall && (
+          <>
+            <div>
+              <img
+                src={LoginImg}
+                alt="loginImage"
+                style={{ marginTop: "150px", width: "350px" }}
+              />
+              <p className={classes.loginHeadSm}>Lorem, ipsum dolor sit </p>
+              <div className={classes.ellipsisSm}>
+                <span>
+                  <FiberManualRecordIcon />
+                </span>
+                <span>
+                  <FiberManualRecordOutlinedIcon />
+                </span>
+                <span>
+                  <FiberManualRecordOutlinedIcon />
+                </span>
+                <span>
+                  <FiberManualRecordOutlinedIcon />
+                </span>
+              </div>
+              <div className={classes.actionButtons}>
+                <Button
+                  className={classes.subBtn}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    // setSignupDialog(true);
+                    <FullScreenDialog />;
+                  }}
+                >
+                  Sign Up
+                </Button>
+
+                <Button
+                  className={classes.subBtn}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    // setSignupDialog(false);
+                  }}
+                >
+                  Login
+                </Button>
+              </div>
+            </div>
+          </>
+        )}
+        {isDesktop && !signupDialog && (
           <div className={classes.loginContainer}>
             <div className={classes.loginRect1}>
               <div className={classes.loginRightSide}>
@@ -402,6 +480,7 @@ export const Login: React.FC = () => {
           </div>
         )}
       </div>
+
       <div className={classes.register}>
         {signupDialog && (
           <div className={classes.loginContainer}>
@@ -599,7 +678,7 @@ export const Login: React.FC = () => {
         )}
       </div>
       <Notification />
-    </>
+    </div>
   );
 };
 

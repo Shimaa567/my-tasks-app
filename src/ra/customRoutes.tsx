@@ -1,6 +1,8 @@
 /* eslint-disable import/no-anonymous-default-export */
 import React from "react";
 import { HashRouter as Router, Route } from "react-router-dom";
+// import Registration from "../components/Registration";
+// import Login from "../components/Login";
 import CreateTask from "./modules/items/CreateTask";
 import EditTask from "./modules/items/EditTask";
 import ShowTask from "./modules/items/ShowTask";
@@ -30,5 +32,7 @@ export default [
       path={`/${name}/:id/edit`}
       render={() => <EditTask name={name} />}
     />
+    {/* <Route exact path={`/register`} render={() => <Registration />} />
+    <Route exact path={"/signin"} render={() => <Login />} /> */}
   </Router>,
 ];
