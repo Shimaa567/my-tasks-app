@@ -70,12 +70,12 @@ const Registration: React.FC<Props> = ({ setCurrentShownForm }) => {
       alignSelf: "center",
     },
     button: {
-      width: "145px",
-      background: "#333333",
-      color: "#FFFFFF",
-      height: "48px",
-      borderRadius: "35px",
-      margin: "0px 0px 20px 140px",
+      width: "145px !important",
+      background: "#333333 !important",
+      color: "#FFFFFF !important",
+      height: "48px !important",
+      borderRadius: "35px !important",
+      margin: "0px 0px 20px 140px !important",
     },
   });
 
@@ -226,7 +226,6 @@ const Registration: React.FC<Props> = ({ setCurrentShownForm }) => {
               variant="contained"
               type="submit"
               disabled={loading}
-              fullWidth
             >
               {loading && <CircularProgress size={25} thickness={2} />}
               <span style={{ color: "#FFFFFF" }}>Sign Up</span>

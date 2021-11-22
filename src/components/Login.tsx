@@ -73,12 +73,12 @@ const Login: React.FC<Props> = ({ setCurrentShownForm }) => {
       alignSelf: "center",
     },
     button: {
-      width: "145px",
-      background: "#333333",
-      color: "#FFFFFF",
-      height: "48px",
-      borderRadius: "35px",
-      margin: "0px 0px 20px 140px",
+      width: "145px !important",
+      background: "#333333 !important",
+      color: "#FFFFFF !important",
+      height: "48px !important",
+      borderRadius: "35px !important",
+      margin: "0px 0px 20px 140px !important",
     },
   });
 
@@ -199,7 +199,8 @@ const Login: React.FC<Props> = ({ setCurrentShownForm }) => {
             >
               {loading && <CircularProgress size={25} thickness={2} />}
               <span style={{ color: "#FFFFFF" }}>
-                {translate("ra.auth.sign_in")}
+                {/* {translate("ra.auth.sign_in")} */}
+                Login
               </span>
             </Button>
 
