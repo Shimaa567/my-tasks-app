@@ -35,7 +35,6 @@ export const Login: React.FC = () => {
     showPassword: false,
   });
   const [signupDialog, setSignupDialog] = useState(false);
-  //const [isOpen, setIsOpen] = useState(false);
 
   const translate = useTranslate();
   const notify = useNotify();
@@ -289,8 +288,6 @@ export const Login: React.FC = () => {
       }
     );
   };
-
-  //const handleOpenDialog = () => (setIsOpen(!isOpen))
 
   const handleClickShowPassword = () => {
     setPasswordValues({

@@ -93,6 +93,7 @@ const useStyles = makeStyles(() =>
         margin: 0,
         padding: 0,
         fontFamily: "Ubuntu !important",
+        color: "#333333",
       },
       html: {
         "-webkit-font-smoothing": "antialiased",
@@ -101,7 +102,7 @@ const useStyles = makeStyles(() =>
         width: "100%",
       },
       body: {
-        backgroundColor: "#f4f6f8",
+        backgroundColor: "#FFFFFF",
         height: "100%",
         width: "100%",
       },
