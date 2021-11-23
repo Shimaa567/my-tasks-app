@@ -25,23 +25,43 @@ const Auth = () => {
   }, [isMobile]);
 
   const useStyles = makeStyles({
-    loginHead: {
+    header: {
       fontSize: "32px",
-      // textAlign: "center",
+      textAlign: "center",
       lineHeight: "55px",
       fontWeight: 900,
-      margin: "auto",
-      width: "440px",
+      width: "420px",
+      padding: "0 15px",
+    },
+    img: {
+      width: "400px",
+      padding: "0 15px",
     },
   });
   const classes = useStyles();
   return (
     <Box>
       {/* common ui between LOGIN & REGISTER */}
-      <Grid container spacing={2} justifyContent="center" alignItems="center">
-        <Grid item xs={9} md={4} style={{ marginTop: "15%" }}>
-          <img src={LoginImg} alt="loginImage" style={{ width: "375px" }} />
-          <p className={classes.loginHead}>Lorem, ipsum dolor sit </p>
+      <Grid
+        container
+        spacing={2}
+        xs={12}
+        md={12}
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Grid item xs={8} md={4} style={{ marginTop: "15%" }}>
+          {isMobile ? (
+            <div style={{ transform: "translate(-25%, 25%)" }}>
+              <img src={LoginImg} className={classes.img} alt="loginImage" />
+              <p className={classes.header}>Lorem, ipsum dolor sit </p>
+            </div>
+          ) : (
+            <>
+              <img src={LoginImg} className={classes.img} alt="loginImage" />
+              <p className={classes.header}>Lorem, ipsum dolor sit </p>
+            </>
+          )}
         </Grid>
         <Grid
           item

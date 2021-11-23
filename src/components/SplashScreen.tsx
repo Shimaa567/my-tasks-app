@@ -10,9 +10,8 @@ const SplashScreen: React.FC<Props> = ({ setCurrentShownForm }) => {
       justifyContent: "center",
       alignItems: "center",
       position: "fixed",
-      left: "5px",
-      right: "5px",
-      bottom: "10px",
+      left: "0px",
+      bottom: "43px",
     },
     btn: {
       background: "#13A4F1",
@@ -27,28 +26,28 @@ const SplashScreen: React.FC<Props> = ({ setCurrentShownForm }) => {
   return (
     <Box>
       <Grid container spacing={10} className={classes.container}>
-        <Grid item xs={6}>
+        <Grid item xs={5}>
           <Button
-            href="#text-button"
+            href="#text-buttons"
             onClick={(e) => {
               e.preventDefault();
               setCurrentShownForm(AuthForms.LOGIN);
             }}
             className={classes.btn}
           >
-            Login
+            <span style={{ color: "#FFFFFF" }}>Login</span>
           </Button>
         </Grid>
         <Grid item xs={6}>
           <Button
-            href="#text-button"
+            href="#text-buttons"
             onClick={(e) => {
               e.preventDefault();
               setCurrentShownForm(AuthForms.SIGNUP);
             }}
             className={classes.btn}
           >
-            Sign Up
+            <span style={{ color: "#FFFFFF" }}>Sign Up</span>
           </Button>
         </Grid>
       </Grid>

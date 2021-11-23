@@ -20,7 +20,6 @@ import { Notification, useTranslate, useLogin, useNotify } from "react-admin";
 import { Checkbox, InputAdornment, OutlinedInput } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import FullScreenDialog from "../components/FullDialog";
 
 export const Login: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -330,7 +329,7 @@ export const Login: React.FC = () => {
                   onClick={(e) => {
                     e.preventDefault();
                     // setSignupDialog(true);
-                    <FullScreenDialog />;
+                    // <FullScreenDialog />;
                   }}
                 >
                   Sign Up
