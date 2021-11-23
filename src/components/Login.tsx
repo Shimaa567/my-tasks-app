@@ -33,7 +33,6 @@ const Login: React.FC<Props> = ({ setCurrentShownForm }) => {
 
   const useStyles = makeStyles({
     login: {
-      // display: "grid",
       backgroundColor: "#FFFFFF",
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
@@ -42,7 +41,7 @@ const Login: React.FC<Props> = ({ setCurrentShownForm }) => {
     },
 
     loginRect: {
-      marginTop: "30px",
+      marginTop: "227px",
     },
     loginHead: {
       fontSize: "32px",
@@ -58,7 +57,7 @@ const Login: React.FC<Props> = ({ setCurrentShownForm }) => {
     },
     input: {
       boxSizing: "border-box",
-      width: "350px !important",
+      width: "340px !important",
       display: "flex !important",
       margin: "auto !important",
       marginBottom: "1em !important",
@@ -67,7 +66,7 @@ const Login: React.FC<Props> = ({ setCurrentShownForm }) => {
     actions: {
       display: "flex",
       justifyContent: "center",
-      margin: "10px",
+      margin: "10px 0",
     },
     checkboxLabel: {
       alignSelf: "center",
@@ -78,7 +77,10 @@ const Login: React.FC<Props> = ({ setCurrentShownForm }) => {
       color: "#FFFFFF !important",
       height: "48px !important",
       borderRadius: "35px !important",
-      margin: "0px 0px 20px 140px !important",
+      marginTop: "15px  !important",
+      top: "50% !important",
+      left: "50% !important",
+      transform: "translate(-50%, -50%) !important",
     },
   });
 
@@ -124,9 +126,7 @@ const Login: React.FC<Props> = ({ setCurrentShownForm }) => {
     <div className={classes.login}>
       <>
         <div className={classes.loginRect}>
-          <p className={classes.loginHead} style={{ marginTop: "150px" }}>
-            Login to your Account
-          </p>
+          <p className={classes.loginHead}>Login to your Account</p>
           <form
             className={classes.form}
             onSubmit={(e) => handleLogin(e)}

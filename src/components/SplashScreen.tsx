@@ -10,9 +10,8 @@ const SplashScreen: React.FC<Props> = ({ setCurrentShownForm }) => {
       justifyContent: "center",
       alignItems: "center",
       position: "fixed",
-      left: "5px",
-      right: "5px",
-      bottom: "10px",
+      left: "0px",
+      bottom: "43px",
     },
     btn: {
       background: "#13A4F1",
@@ -27,7 +26,7 @@ const SplashScreen: React.FC<Props> = ({ setCurrentShownForm }) => {
   return (
     <Box>
       <Grid container spacing={10} className={classes.container}>
-        <Grid item xs={6}>
+        <Grid item xs={5}>
           <Button
             href="#text-button"
             onClick={(e) => {

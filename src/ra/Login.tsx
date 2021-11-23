@@ -20,7 +20,7 @@ import { Notification, useTranslate, useLogin, useNotify } from "react-admin";
 import { Checkbox, InputAdornment, OutlinedInput } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import FullScreenDialog from "../components/FullDialog";
+import FullScreenDialog from "../components/LoginDialog";
 
 export const Login: React.FC = () => {
   const [loading, setLoading] = useState(false);

@@ -75,7 +75,10 @@ const Registration: React.FC<Props> = ({ setCurrentShownForm }) => {
       color: "#FFFFFF !important",
       height: "48px !important",
       borderRadius: "35px !important",
-      margin: "0px 0px 20px 140px !important",
+      marginTop: "15px  !important",
+      top: "50% !important",
+      left: "50% !important",
+      transform: "translate(-50%, -50%) !important",
     },
   });
 
@@ -230,21 +233,21 @@ const Registration: React.FC<Props> = ({ setCurrentShownForm }) => {
               {loading && <CircularProgress size={25} thickness={2} />}
               <span style={{ color: "#FFFFFF" }}>Sign Up</span>
             </Button>
+            <div style={{ textAlign: "center" }}>
+              <span>
+                Already Have an account ?&nbsp;
+                <Button
+                  href="#text-button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setCurrentShownForm(AuthForms.LOGIN);
+                  }}
+                >
+                  <span style={{ color: "#30AFF3" }}>Login</span>
+                </Button>
+              </span>
+            </div>
           </form>
-        </div>
-        <div style={{ textAlign: "center" }}>
-          <span>
-            Already Have an account ?&nbsp;
-            <Button
-              href="#text-button"
-              onClick={(e) => {
-                e.preventDefault();
-                setCurrentShownForm(AuthForms.LOGIN);
-              }}
-            >
-              <span style={{ color: "#30AFF3" }}>Login</span>
-            </Button>
-          </span>
         </div>
       </>
       <Notification />
