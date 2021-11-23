@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Notification, useTranslate, useLogin, useNotify } from "react-admin";
-import { useLocation } from "react-router-dom";
+import { Notification, useTranslate, useNotify, fetchUtils } from "react-admin";
+import { APIU } from "../ra/service";
+// import { useLocation } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
 import {
   Button,
@@ -30,32 +31,35 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const LoginDialog: React.FC<Props> = ({ setCurrentShownForm }) => {
-  const login = useLogin();
+const RegisterDialog: React.FC<Props> = ({ setCurrentShownForm }) => {
   const translate = useTranslate();
   const notify = useNotify();
-  const location = useLocation<{ nextPathname: string } | null>();
+  //   const location = useLocation<{ nextPathname: string } | null>();
   const [loading, setLoading] = useState(false);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [open, setOpen] = useState(true);
-
-  const [loginData, setLoginData] = useState({ username: "", password: "" });
+  const [registerData, setRegisterData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
   const [passwordValues, setPasswordValues] = useState({
     password: "",
     showPassword: false,
   });
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [open, setOpen] = useState(true);
+
   const useStyles = makeStyles({
-    login: {
+    register: {
       backgroundColor: "#FFFFFF",
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
       color: "#333333",
       height: "inherit",
+      marginTop: "135px",
     },
-
     container: {
-      marginTop: "217px",
+      marginTop: "140px",
     },
     header: {
       fontSize: "32px",
@@ -82,11 +86,11 @@ const LoginDialog: React.FC<Props> = ({ setCurrentShownForm }) => {
     actions: {
       display: "flex",
       justifyContent: "center",
-      margin: "10px 0",
+      margin: "10px",
     },
     checkboxLabel: {
       alignSelf: "center",
-      fontSize: "15px",
+      fontSize: "14px",
     },
     button: {
       width: "145px !important",
@@ -102,10 +106,6 @@ const LoginDialog: React.FC<Props> = ({ setCurrentShownForm }) => {
   });
 
   const classes = useStyles();
-
-  const handleChange = (prop) => (event) => {
-    setPasswordValues({ ...passwordValues, [prop]: event.target.value });
-  };
   const handleClickShowPassword = () => {
     setPasswordValues({
       ...passwordValues,
@@ -113,11 +113,26 @@ const LoginDialog: React.FC<Props> = ({ setCurrentShownForm }) => {
     });
   };
 
-  const handleLogin = (event) => {
+  const handleChange = (prop) => (event) => {
+    setPasswordValues({ ...passwordValues, [prop]: event.target.value });
+  };
+
+  const handleRegister = (event) => {
     setLoading(true);
     event.preventDefault();
-    login(loginData, location.state ? location.state.nextPathname : "/").catch(
-      (error: Error) => {
+    let url = APIU + "/auth/local/register";
+    let options = {
+      headers: new Headers({ Accept: "application/json" }),
+      method: "POST",
+      body: JSON.stringify(registerData),
+    };
+    fetchUtils
+      .fetchJson(url, options)
+      .then(() => {
+        notify(`Account Registered!`, "success");
+        setLoading(false);
+      })
+      .catch((error) => {
         setLoading(false);
         notify(
           typeof error === "string"
@@ -135,49 +150,77 @@ const LoginDialog: React.FC<Props> = ({ setCurrentShownForm }) => {
                 : undefined,
           }
         );
-      }
-    );
+      });
   };
 
   return (
-    <div className={classes.login}>
+    <div className={classes.register}>
       <Dialog fullScreen open={open} TransitionComponent={Transition}>
         <div className={classes.container}>
-          <p className={classes.header}>Login to your Account</p>
+          <p className={classes.header}> Create New Account</p>
           <form
             className={classes.form}
-            onSubmit={(e) => handleLogin(e)}
+            onSubmit={(e) => handleRegister(e)}
             noValidate
           >
             <OutlinedInput
               className={classes.input}
               type="text"
-              placeholder="User Name or Email"
+              placeholder="First Name"
               fullWidth
               required
               id="username"
               label={translate("ra.auth.username")}
-              value={loginData.username}
+              value={registerData.username}
               onChange={(e) =>
-                setLoginData({ ...loginData, username: e.target.value })
+                setRegisterData({ ...registerData, username: e.target.value })
+              }
+              disabled={loading}
+            />
+            <OutlinedInput
+              className={classes.input}
+              type="text"
+              placeholder="Last Name"
+              fullWidth
+              required
+              id="username"
+              label={translate("ra.auth.username")}
+              value={registerData.username}
+              onChange={(e) =>
+                setRegisterData({ ...registerData, username: e.target.value })
               }
               disabled={loading}
             />
 
             <OutlinedInput
+              className={classes.input}
+              type="email"
+              placeholder="Email"
+              fullWidth
+              required
+              id="email"
+              label={translate("ra.auth.email")}
+              value={registerData.email}
+              onChange={(e) =>
+                setRegisterData({ ...registerData, email: e.target.value })
+              }
+              disabled={loading}
+            />
+            <OutlinedInput
               id="outlined-adornment-password"
               className={classes.input}
               onChange={(e) => {
                 handleChange("password");
-                setLoginData({ ...loginData, password: e.target.value });
+                setRegisterData({
+                  ...registerData,
+                  password: e.target.value,
+                });
               }}
               type={passwordValues.showPassword ? "text" : "password"}
               fullWidth
               required
-              // id="password"
               label={translate("ra.auth.password")}
-              //label="Password"
-              value={loginData.password}
+              value={registerData.password}
               disabled={loading}
               endAdornment={
                 <InputAdornment position="end">
@@ -196,15 +239,17 @@ const LoginDialog: React.FC<Props> = ({ setCurrentShownForm }) => {
               }
               placeholder="Password"
             />
-
             <div className={classes.actions}>
               <Checkbox sx={{ padding: "9px 0" }} />
-              <span className={classes.checkboxLabel}>Remember me</span>
-              <span
-                className={classes.checkboxLabel}
-                style={{ paddingLeft: "45px" }}
-              >
-                Forget your password ?
+              <span className={classes.checkboxLabel}>
+                I agree to DataXlens{" "}
+                <a href="/" style={{ color: "#30AFF3" }}>
+                  Privacy
+                </a>{" "}
+                and{" "}
+                <a href="/" style={{ color: "#30AFF3" }}>
+                  terms of use
+                </a>{" "}
               </span>
             </div>
             <Button
@@ -212,26 +257,21 @@ const LoginDialog: React.FC<Props> = ({ setCurrentShownForm }) => {
               variant="contained"
               type="submit"
               disabled={loading}
-              fullWidth
             >
               {loading && <CircularProgress size={25} thickness={2} />}
-              <span style={{ color: "#FFFFFF" }}>
-                {/* {translate("ra.auth.sign_in")} */}
-                Login
-              </span>
+              <span style={{ color: "#FFFFFF" }}>Sign Up</span>
             </Button>
-
             <div style={{ textAlign: "center" }}>
               <span>
-                Don't have an account yet?&nbsp;
+                Already Have an account ?&nbsp;
                 <Button
                   href="#text-buttons"
                   onClick={(e) => {
                     e.preventDefault();
-                    setCurrentShownForm(AuthForms.SIGNUP);
+                    setCurrentShownForm(AuthForms.LOGIN);
                   }}
                 >
-                  <span style={{ color: "#30AFF3" }}>Signup</span>
+                  <span style={{ color: "#30AFF3" }}>Login</span>
                 </Button>
               </span>
             </div>
@@ -243,4 +283,4 @@ const LoginDialog: React.FC<Props> = ({ setCurrentShownForm }) => {
   );
 };
 
-export default LoginDialog;
+export default RegisterDialog;
