@@ -4,6 +4,7 @@ import Login from "./Login";
 import Registration from "./Registration";
 import SplashScreen from "./SplashScreen";
 import LoginImg from "../ra/assets/images/login.svg";
+import ImagesCarousel from "./Carousel";
 
 export enum AuthForms {
   LOGIN = "LOGIN",
@@ -39,6 +40,20 @@ const Auth = () => {
     },
   });
   const classes = useStyles();
+  let items = [
+    {
+      img: LoginImg,
+      title: "Lorem ipsum dolor sit amet.",
+    },
+    {
+      img: LoginImg,
+      title: "Lorem  dolor sit ipsum amet.",
+    },
+    {
+      img: LoginImg,
+      title: "Lorem  dolor sit amet ipsum.",
+    },
+  ];
   return (
     <Box>
       {/* common ui between LOGIN & REGISTER */}
@@ -58,8 +73,9 @@ const Auth = () => {
             </div>
           ) : (
             <>
-              <img src={LoginImg} className={classes.img} alt="loginImage" />
-              <p className={classes.header}>Lorem, ipsum dolor sit </p>
+              {/* <img src={LoginImg} className={classes.img} alt="loginImage" />
+              <p className={classes.header}>Lorem, ipsum dolor sit </p> */}
+              <ImagesCarousel items={items} />
             </>
           )}
         </Grid>
