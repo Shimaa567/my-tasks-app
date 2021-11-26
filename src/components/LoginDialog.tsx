@@ -32,6 +32,7 @@ const Transition = React.forwardRef(function Transition(
 
 const LoginDialog: React.FC<Props> = ({ setCurrentShownForm }) => {
   const login = useLogin();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const translate = useTranslate();
   const notify = useNotify();
   const location = useLocation<{ nextPathname: string } | null>();
@@ -116,27 +117,29 @@ const LoginDialog: React.FC<Props> = ({ setCurrentShownForm }) => {
   const handleLogin = (event) => {
     setLoading(true);
     event.preventDefault();
-    login(loginData, location.state ? location.state.nextPathname : "/").catch(
-      (error: Error) => {
-        setLoading(false);
-        notify(
-          typeof error === "string"
-            ? error
-            : typeof error === "undefined" || !error.message
-            ? "ra.auth.sign_in_error"
-            : error.message,
-          "warning",
-          {
-            _:
-              typeof error === "string"
-                ? error
-                : error && error.message
-                ? error.message
-                : undefined,
-          }
-        );
-      }
-    );
+    login(
+      loginData,
+      location.state ? location.state.nextPathname : "/",
+      notify(`Welcome Back!`, "success")
+    ).catch((error: Error) => {
+      setLoading(false);
+      notify(
+        typeof error === "string"
+          ? error
+          : typeof error === "undefined" || !error.message
+          ? "ra.auth.sign_in_error"
+          : error.message,
+        "warning",
+        {
+          _:
+            typeof error === "string"
+              ? error
+              : error && error.message
+              ? error.message
+              : undefined,
+        }
+      );
+    });
   };
 
   return (
@@ -156,7 +159,7 @@ const LoginDialog: React.FC<Props> = ({ setCurrentShownForm }) => {
               fullWidth
               required
               id="username"
-              label={translate("ra.auth.username")}
+              // label={translate("ra.auth.username")}
               value={loginData.username}
               onChange={(e) =>
                 setLoginData({ ...loginData, username: e.target.value })
@@ -174,9 +177,7 @@ const LoginDialog: React.FC<Props> = ({ setCurrentShownForm }) => {
               type={passwordValues.showPassword ? "text" : "password"}
               fullWidth
               required
-              // id="password"
-              label={translate("ra.auth.password")}
-              //label="Password"
+              // label={translate("ra.auth.password")}
               value={loginData.password}
               disabled={loading}
               endAdornment={
@@ -207,6 +208,8 @@ const LoginDialog: React.FC<Props> = ({ setCurrentShownForm }) => {
                 Forget your password ?
               </span>
             </div>
+            {loading && <CircularProgress size={50} thickness={3} />}
+
             <Button
               className={classes.button}
               variant="contained"
@@ -214,7 +217,6 @@ const LoginDialog: React.FC<Props> = ({ setCurrentShownForm }) => {
               disabled={loading}
               fullWidth
             >
-              {loading && <CircularProgress size={25} thickness={2} />}
               <span style={{ color: "#FFFFFF" }}>
                 {/* {translate("ra.auth.sign_in")} */}
                 Login

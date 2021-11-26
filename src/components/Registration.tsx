@@ -20,6 +20,7 @@ interface Props {
 }
 const Registration: React.FC<Props> = ({ setCurrentShownForm }) => {
   const notify = useNotify();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const translate = useTranslate();
 
   const [loading, setLoading] = useState(false);
@@ -139,11 +140,7 @@ const Registration: React.FC<Props> = ({ setCurrentShownForm }) => {
         ) : (
           <div>
             <p className={classes.header}> Create New Account</p>
-            <form
-              className={classes.form}
-              onSubmit={(e) => handleRegister(e)}
-              noValidate
-            >
+            <form className={classes.form} onSubmit={(e) => handleRegister(e)}>
               <OutlinedInput
                 className={classes.input}
                 type="text"
@@ -151,7 +148,7 @@ const Registration: React.FC<Props> = ({ setCurrentShownForm }) => {
                 fullWidth
                 required
                 id="username"
-                label={translate("ra.auth.username")}
+                // label={translate("ra.auth.username")}
                 value={registerData.username}
                 onChange={(e) =>
                   setRegisterData({ ...registerData, username: e.target.value })
@@ -165,7 +162,7 @@ const Registration: React.FC<Props> = ({ setCurrentShownForm }) => {
                 fullWidth
                 required
                 id="username"
-                label={translate("ra.auth.username")}
+                // label={translate("ra.auth.username")}
                 value={registerData.username}
                 onChange={(e) =>
                   setRegisterData({ ...registerData, username: e.target.value })
@@ -180,7 +177,7 @@ const Registration: React.FC<Props> = ({ setCurrentShownForm }) => {
                 fullWidth
                 required
                 id="email"
-                label={translate("ra.auth.email")}
+                // label={translate("ra.auth.email")}
                 value={registerData.email}
                 onChange={(e) =>
                   setRegisterData({ ...registerData, email: e.target.value })
@@ -200,7 +197,7 @@ const Registration: React.FC<Props> = ({ setCurrentShownForm }) => {
                 type={passwordValues.showPassword ? "text" : "password"}
                 fullWidth
                 required
-                label={translate("ra.auth.password")}
+                // label={translate("ra.auth.password")}
                 value={registerData.password}
                 disabled={loading}
                 endAdornment={
@@ -223,7 +220,7 @@ const Registration: React.FC<Props> = ({ setCurrentShownForm }) => {
               <div className={classes.actions}>
                 <Checkbox sx={{ padding: "9px 0" }} />
                 <span className={classes.checkboxLabel}>
-                  I agree to DataXlens{" "}
+                  I agree to Sourcya{" "}
                   <a href="/" style={{ color: "#30AFF3" }}>
                     Privacy
                   </a>{" "}
@@ -233,13 +230,14 @@ const Registration: React.FC<Props> = ({ setCurrentShownForm }) => {
                   </a>{" "}
                 </span>
               </div>
+              {loading && <CircularProgress size={50} thickness={3} />}
+
               <Button
                 className={classes.button}
                 variant="contained"
                 type="submit"
                 disabled={loading}
               >
-                {loading && <CircularProgress size={25} thickness={2} />}
                 <span style={{ color: "#FFFFFF" }}>Sign Up</span>
               </Button>
               <div style={{ textAlign: "center" }}>
