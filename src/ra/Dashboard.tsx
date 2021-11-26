@@ -1,7 +1,7 @@
 import React from "react";
 import { ThemeProvider } from "@material-ui/core";
 import { Admin } from "react-admin";
-//import List from "@material-ui/icons/List";
+//import i18nProvider from "./i18nProvider";
 
 import { theme, GlobalStyles } from "./theme";
 import { dataProvider, authProvider } from "./service";
@@ -12,12 +12,15 @@ import TasksList from "./modules/items/TasksList";
 import ShowTask from "./modules/items/ShowTask";
 import EditTask from "./modules/items/EditTask";
 import CreateTask from "./modules/items/CreateTask";
-//import { Login } from "./Login";
-// import Login from "../components/Login";
+
 import Tasks from "./Tasks";
 import customRoutes from "./customRoutes";
 import Auth from "../components/Auth";
 
+// const messages = {
+
+// }
+// const i18nProvider = locale => messages[locale];
 const Dashboard: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
@@ -26,20 +29,13 @@ const Dashboard: React.FC = () => {
         theme={theme}
         dataProvider={dataProvider}
         authProvider={authProvider}
+        //i18nProvider={i18nProvider}
         catchAll={NotFound}
         loginPage={Auth}
         dashboard={Home}
         customRoutes={customRoutes}
         disableTelemetry
       >
-        {/* <Resource
-          name="tasks"
-          list={TasksList}
-          show={ShowTask}
-          create={CreateTask}
-          edit={EditTask}
-          icon={List}
-        /> */}
         <Tasks
           name="tasks"
           List={(props) => <TasksList name="tasks" {...props} />}
@@ -53,13 +49,3 @@ const Dashboard: React.FC = () => {
 };
 
 export default Dashboard;
-
-// <Tasks
-// name="tasks"
-// axiosInstance={axiosInstance}
-// task={Tasks}
-// List={TasksList}
-// Show={ShowTask}
-// Create={CreateTask}
-// Edit={EditTask}
-// />
