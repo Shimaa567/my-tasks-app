@@ -1,9 +1,10 @@
 import React from "react";
-import { useMediaQuery, makeStyles, Grid, Box } from "@material-ui/core";
+import { useMediaQuery, Grid, Box } from "@material-ui/core";
 import Login from "./Login";
 import Registration from "./Registration";
 import SplashScreen from "./SplashScreen";
 import LoginImg from "../ra/assets/images/login.svg";
+import ImagesCarousel from "./Carousel";
 
 export enum AuthForms {
   LOGIN = "LOGIN",
@@ -24,21 +25,24 @@ const Auth = () => {
     }
   }, [isMobile]);
 
-  const useStyles = makeStyles({
-    header: {
-      fontSize: "32px",
-      textAlign: "center",
-      lineHeight: "55px",
-      fontWeight: 900,
-      width: "420px",
-      padding: "0 15px",
+  let items = [
+    {
+      img: LoginImg,
+      title: "Lorem ipsum dolor sit amet.",
     },
-    img: {
-      width: "400px",
-      padding: "0 15px",
+    {
+      img: LoginImg,
+      title: "Lorem  dolor sit ipsum amet.",
     },
-  });
-  const classes = useStyles();
+    {
+      img: LoginImg,
+      title: "Lorem  dolor sit amet ipsum.",
+    },
+    {
+      img: LoginImg,
+      title: "Lorem  dolor sit amet ipsum.",
+    },
+  ];
   return (
     <Box>
       {/* common ui between LOGIN & REGISTER */}
@@ -50,16 +54,14 @@ const Auth = () => {
         justifyContent="center"
         alignItems="center"
       >
-        <Grid item xs={8} md={4} style={{ marginTop: "15%" }}>
+        <Grid item xs={12} md={4} style={{ marginTop: "15%" }}>
           {isMobile ? (
-            <div style={{ transform: "translate(-25%, 25%)" }}>
-              <img src={LoginImg} className={classes.img} alt="loginImage" />
-              <p className={classes.header}>Lorem, ipsum dolor sit </p>
+            <div style={{ transform: "translate(0%, 5%)" }}>
+              <ImagesCarousel items={items} />
             </div>
           ) : (
             <>
-              <img src={LoginImg} className={classes.img} alt="loginImage" />
-              <p className={classes.header}>Lorem, ipsum dolor sit </p>
+              <ImagesCarousel items={items} />
             </>
           )}
         </Grid>
