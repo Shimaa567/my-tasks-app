@@ -28,26 +28,26 @@ const SplashScreen: React.FC<Props> = ({ setCurrentShownForm }) => {
       <Grid container spacing={10} className={classes.container}>
         <Grid item xs={5}>
           <Button
-            href="#text-button"
+            href="#text-buttons"
             onClick={(e) => {
               e.preventDefault();
               setCurrentShownForm(AuthForms.LOGIN);
             }}
             className={classes.btn}
           >
-            Login
+            <span style={{ color: "#FFFFFF" }}>Login</span>
           </Button>
         </Grid>
         <Grid item xs={6}>
           <Button
-            href="#text-button"
+            href="#text-buttons"
             onClick={(e) => {
               e.preventDefault();
               setCurrentShownForm(AuthForms.SIGNUP);
             }}
             className={classes.btn}
           >
-            Sign Up
+            <span style={{ color: "#FFFFFF" }}>Sign Up</span>
           </Button>
         </Grid>
       </Grid>

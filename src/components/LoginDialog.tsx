@@ -1,17 +1,25 @@
-import * as React from "react";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import ListItemText from "@mui/material/ListItemText";
-import ListItem from "@mui/material/ListItem";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import CloseIcon from "@mui/icons-material/Close";
-import Slide from "@mui/material/Slide";
+import React, { useState } from "react";
+import { Notification, useTranslate, useLogin, useNotify } from "react-admin";
+import { useLocation } from "react-router-dom";
+import { makeStyles } from "@material-ui/core";
+import {
+  Button,
+  CircularProgress,
+  IconButton,
+  Checkbox,
+  InputAdornment,
+  OutlinedInput,
+  Dialog,
+  Slide,
+} from "@mui/material";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { TransitionProps } from "@mui/material/transitions";
+import { AuthForms } from "./Auth";
+
+interface Props {
+  setCurrentShownForm: React.Dispatch<React.SetStateAction<AuthForms>>;
+}
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -22,60 +30,217 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const FullScreenDialog: React.FC = () => {
-  const [open, setOpen] = React.useState(false);
+const LoginDialog: React.FC<Props> = ({ setCurrentShownForm }) => {
+  const login = useLogin();
+  const translate = useTranslate();
+  const notify = useNotify();
+  const location = useLocation<{ nextPathname: string } | null>();
+  const [loading, setLoading] = useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [open, setOpen] = useState(true);
+
+  const [loginData, setLoginData] = useState({ username: "", password: "" });
+  const [passwordValues, setPasswordValues] = useState({
+    password: "",
+    showPassword: false,
+  });
+  const useStyles = makeStyles({
+    login: {
+      backgroundColor: "#FFFFFF",
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "cover",
+      color: "#333333",
+      height: "inherit",
+    },
+
+    container: {
+      marginTop: "217px",
+    },
+    header: {
+      fontSize: "32px",
+      textAlign: "center",
+      lineHeight: "55px",
+      fontWeight: 900,
+      margin: "auto",
+      width: "334px",
+      height: "37px",
+    },
+    form: {
+      padding: "0 1em 1em 1em",
+      marginTop: "46px",
+    },
+    input: {
+      boxSizing: "border-box",
+      width: "340px !important",
+      display: "flex !important",
+      margin: "auto !important",
+      marginBottom: "1em !important",
+      border: "1px solid #C62D65 !important",
+      borderRadius: "39px !important",
+    },
+    actions: {
+      display: "flex",
+      justifyContent: "center",
+      margin: "10px 0",
+    },
+    checkboxLabel: {
+      alignSelf: "center",
+      fontSize: "15px",
+    },
+    button: {
+      width: "145px !important",
+      background: "#13A4F1; !important",
+      color: "#FFFFFF !important",
+      height: "48px !important",
+      borderRadius: "35px !important",
+      marginTop: "27px  !important",
+      top: "50% !important",
+      left: "50% !important",
+      transform: "translate(-50%, -50%) !important",
+    },
+  });
+
+  const classes = useStyles();
+
+  const handleChange = (prop) => (event) => {
+    setPasswordValues({ ...passwordValues, [prop]: event.target.value });
+  };
+  const handleClickShowPassword = () => {
+    setPasswordValues({
+      ...passwordValues,
+      showPassword: !passwordValues.showPassword,
+    });
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleLogin = (event) => {
+    setLoading(true);
+    event.preventDefault();
+    login(loginData, location.state ? location.state.nextPathname : "/").catch(
+      (error: Error) => {
+        setLoading(false);
+        notify(
+          typeof error === "string"
+            ? error
+            : typeof error === "undefined" || !error.message
+            ? "ra.auth.sign_in_error"
+            : error.message,
+          "warning",
+          {
+            _:
+              typeof error === "string"
+                ? error
+                : error && error.message
+                ? error.message
+                : undefined,
+          }
+        );
+      }
+    );
   };
 
   return (
-    <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        {}
-      </Button>
-      <Dialog
-        fullScreen
-        open={open}
-        onClose={handleClose}
-        TransitionComponent={Transition}
-      >
-        <AppBar sx={{ position: "relative" }}>
-          <Toolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={handleClose}
-              aria-label="close"
-            >
-              <CloseIcon />
-            </IconButton>
-            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Sound
-            </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
-              save
-            </Button>
-          </Toolbar>
-        </AppBar>
-        <List>
-          <ListItem button>
-            <ListItemText primary="Phone ringtone" secondary="Titania" />
-          </ListItem>
-          <Divider />
-          <ListItem button>
-            <ListItemText
-              primary="Default notification ringtone"
-              secondary="Tethys"
+    <div className={classes.login}>
+      <Dialog fullScreen open={open} TransitionComponent={Transition}>
+        <div className={classes.container}>
+          <p className={classes.header}>Login to your Account</p>
+          <form
+            className={classes.form}
+            onSubmit={(e) => handleLogin(e)}
+            noValidate
+          >
+            <OutlinedInput
+              className={classes.input}
+              type="text"
+              placeholder="User Name or Email"
+              fullWidth
+              required
+              id="username"
+              label={translate("ra.auth.username")}
+              value={loginData.username}
+              onChange={(e) =>
+                setLoginData({ ...loginData, username: e.target.value })
+              }
+              disabled={loading}
             />
-          </ListItem>
-        </List>
+
+            <OutlinedInput
+              id="outlined-adornment-password"
+              className={classes.input}
+              onChange={(e) => {
+                handleChange("password");
+                setLoginData({ ...loginData, password: e.target.value });
+              }}
+              type={passwordValues.showPassword ? "text" : "password"}
+              fullWidth
+              required
+              // id="password"
+              label={translate("ra.auth.password")}
+              //label="Password"
+              value={loginData.password}
+              disabled={loading}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    edge="end"
+                  >
+                    {passwordValues.showPassword ? (
+                      <VisibilityOff />
+                    ) : (
+                      <Visibility />
+                    )}
+                  </IconButton>
+                </InputAdornment>
+              }
+              placeholder="Password"
+            />
+
+            <div className={classes.actions}>
+              <Checkbox sx={{ padding: "9px 0" }} />
+              <span className={classes.checkboxLabel}>Remember me</span>
+              <span
+                className={classes.checkboxLabel}
+                style={{ paddingLeft: "45px" }}
+              >
+                Forget your password ?
+              </span>
+            </div>
+            <Button
+              className={classes.button}
+              variant="contained"
+              type="submit"
+              disabled={loading}
+              fullWidth
+            >
+              {loading && <CircularProgress size={25} thickness={2} />}
+              <span style={{ color: "#FFFFFF" }}>
+                {/* {translate("ra.auth.sign_in")} */}
+                Login
+              </span>
+            </Button>
+
+            <div style={{ textAlign: "center" }}>
+              <span>
+                Don't have an account yet?&nbsp;
+                <Button
+                  href="#text-buttons"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setCurrentShownForm(AuthForms.SIGNUP);
+                  }}
+                >
+                  <span style={{ color: "#30AFF3" }}>Signup</span>
+                </Button>
+              </span>
+            </div>
+          </form>
+        </div>
       </Dialog>
+      <Notification />
     </div>
   );
 };
-export default FullScreenDialog;
+
+export default LoginDialog;

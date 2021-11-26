@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Notification, useTranslate, useLogin, useNotify } from "react-admin";
-import { makeStyles } from "@material-ui/core";
+import { useMediaQuery, makeStyles } from "@material-ui/core";
 import {
   Button,
   CircularProgress,
@@ -13,6 +13,7 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { AuthForms } from "./Auth";
+import LoginDialog from "./LoginDialog";
 
 interface Props {
   setCurrentShownForm: React.Dispatch<React.SetStateAction<AuthForms>>;
@@ -31,6 +32,8 @@ const Login: React.FC<Props> = ({ setCurrentShownForm }) => {
     showPassword: false,
   });
 
+  const isMobile = useMediaQuery((theme: any) => theme.breakpoints.down("sm"));
+
   const useStyles = makeStyles({
     login: {
       backgroundColor: "#FFFFFF",
@@ -40,10 +43,10 @@ const Login: React.FC<Props> = ({ setCurrentShownForm }) => {
       height: "inherit",
     },
 
-    loginRect: {
+    container: {
       marginTop: "227px",
     },
-    loginHead: {
+    header: {
       fontSize: "32px",
       textAlign: "center",
       lineHeight: "55px",
@@ -125,101 +128,105 @@ const Login: React.FC<Props> = ({ setCurrentShownForm }) => {
   return (
     <div className={classes.login}>
       <>
-        <div className={classes.loginRect}>
-          <p className={classes.loginHead}>Login to your Account</p>
-          <form
-            className={classes.form}
-            onSubmit={(e) => handleLogin(e)}
-            noValidate
-          >
-            <OutlinedInput
-              className={classes.input}
-              type="text"
-              placeholder="User Name or Email"
-              fullWidth
-              required
-              id="username"
-              label={translate("ra.auth.username")}
-              value={loginData.username}
-              onChange={(e) =>
-                setLoginData({ ...loginData, username: e.target.value })
-              }
-              disabled={loading}
-            />
-
-            <OutlinedInput
-              id="outlined-adornment-password"
-              className={classes.input}
-              onChange={(e) => {
-                handleChange("password");
-                setLoginData({ ...loginData, password: e.target.value });
-              }}
-              type={passwordValues.showPassword ? "text" : "password"}
-              fullWidth
-              required
-              // id="password"
-              label={translate("ra.auth.password")}
-              //label="Password"
-              value={loginData.password}
-              disabled={loading}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    edge="end"
-                  >
-                    {passwordValues.showPassword ? (
-                      <VisibilityOff />
-                    ) : (
-                      <Visibility />
-                    )}
-                  </IconButton>
-                </InputAdornment>
-              }
-              placeholder="Password"
-            />
-
-            <div className={classes.actions}>
-              <Checkbox sx={{ padding: "9px 0" }} />
-              <span className={classes.checkboxLabel}>Remember me</span>
-              <span
-                className={classes.checkboxLabel}
-                style={{ paddingLeft: "45px" }}
-              >
-                Forget your password ?
-              </span>
-            </div>
-            <Button
-              className={classes.button}
-              variant="contained"
-              type="submit"
-              disabled={loading}
-              fullWidth
+        {isMobile ? (
+          <LoginDialog setCurrentShownForm={setCurrentShownForm} />
+        ) : (
+          <div className={classes.container}>
+            <p className={classes.header}>Login to your Account</p>
+            <form
+              className={classes.form}
+              onSubmit={(e) => handleLogin(e)}
+              noValidate
             >
-              {loading && <CircularProgress size={25} thickness={2} />}
-              <span style={{ color: "#FFFFFF" }}>
-                {/* {translate("ra.auth.sign_in")} */}
-                Login
-              </span>
-            </Button>
+              <OutlinedInput
+                className={classes.input}
+                type="text"
+                placeholder="User Name or Email"
+                fullWidth
+                required
+                id="username"
+                label={translate("ra.auth.username")}
+                value={loginData.username}
+                onChange={(e) =>
+                  setLoginData({ ...loginData, username: e.target.value })
+                }
+                disabled={loading}
+              />
 
-            <div style={{ textAlign: "center" }}>
-              <span>
-                Don't have an account yet?&nbsp;
-                <Button
-                  href="#text-button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setCurrentShownForm(AuthForms.SIGNUP);
-                  }}
+              <OutlinedInput
+                id="outlined-adornment-password"
+                className={classes.input}
+                onChange={(e) => {
+                  handleChange("password");
+                  setLoginData({ ...loginData, password: e.target.value });
+                }}
+                type={passwordValues.showPassword ? "text" : "password"}
+                fullWidth
+                required
+                // id="password"
+                label={translate("ra.auth.password")}
+                //label="Password"
+                value={loginData.password}
+                disabled={loading}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      edge="end"
+                    >
+                      {passwordValues.showPassword ? (
+                        <VisibilityOff />
+                      ) : (
+                        <Visibility />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                placeholder="Password"
+              />
+
+              <div className={classes.actions}>
+                <Checkbox sx={{ padding: "9px 0" }} />
+                <span className={classes.checkboxLabel}>Remember me</span>
+                <span
+                  className={classes.checkboxLabel}
+                  style={{ paddingLeft: "45px" }}
                 >
-                  <span style={{ color: "#30AFF3" }}>Signup</span>
-                </Button>
-              </span>
-            </div>
-          </form>
-        </div>
+                  Forget your password ?
+                </span>
+              </div>
+              <Button
+                className={classes.button}
+                variant="contained"
+                type="submit"
+                disabled={loading}
+                fullWidth
+              >
+                {loading && <CircularProgress size={25} thickness={2} />}
+                <span style={{ color: "#FFFFFF" }}>
+                  {/* {translate("ra.auth.sign_in")} */}
+                  Login
+                </span>
+              </Button>
+
+              <div style={{ textAlign: "center" }}>
+                <span>
+                  Don't have an account yet?&nbsp;
+                  <Button
+                    href="#text-button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setCurrentShownForm(AuthForms.SIGNUP);
+                    }}
+                  >
+                    <span style={{ color: "#30AFF3" }}>Signup</span>
+                  </Button>
+                </span>
+              </div>
+            </form>
+          </div>
+        )}
       </>
       <Notification />
     </div>
