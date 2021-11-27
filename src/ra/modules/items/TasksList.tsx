@@ -69,10 +69,7 @@ const TasksList = ({ name }) => {
           })
           .catch((err) => setError(err))
           .finally(() => setLoading(false));
-        // await api.deleteItem({ index });
       }
-
-      //api.deleteItem({ index });
     };
     return (
       <FormControlLabel
@@ -141,16 +138,6 @@ const TasksList = ({ name }) => {
       </div>
     </>
   );
-  // <List>
-  //   {data.map((item) => (
-  //     <>
-  //       <ListItem>{item.title}</ListItem>
-  //       <ListItem>{item.description}</ListItem>
-  //       <ListItem>{item.type}</ListItem>
-  //       <ListItem>{item.status}</ListItem>
-  //     </>
-  //   ))}
-  // </List>
 };
 
 export default TasksList;

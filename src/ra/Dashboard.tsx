@@ -1,7 +1,9 @@
 import React from "react";
 import { ThemeProvider } from "@material-ui/core";
 import { Admin } from "react-admin";
-//import i18nProvider from "./i18nProvider";
+
+import polyglotI18nProvider from "ra-i18n-polyglot";
+import { ar, en } from "./locales";
 
 import { theme, GlobalStyles } from "./theme";
 import { dataProvider, authProvider } from "./service";
@@ -17,10 +19,11 @@ import Tasks from "./Tasks";
 import customRoutes from "./customRoutes";
 import Auth from "../components/Auth";
 
-// const messages = {
+const i18nProvider = polyglotI18nProvider(
+  (locale) => (locale === "ar" ? ar : en),
+  "en"
+);
 
-// }
-// const i18nProvider = locale => messages[locale];
 const Dashboard: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
@@ -29,7 +32,7 @@ const Dashboard: React.FC = () => {
         theme={theme}
         dataProvider={dataProvider}
         authProvider={authProvider}
-        //i18nProvider={i18nProvider}
+        i18nProvider={i18nProvider}
         catchAll={NotFound}
         loginPage={Auth}
         dashboard={Home}

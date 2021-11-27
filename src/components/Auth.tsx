@@ -34,22 +34,9 @@ const Auth = () => {
       img: LoginImg,
       title: "Lorem  dolor sit ipsum amet.",
     },
-<<<<<<< HEAD
     {
       img: LoginImg,
       title: "Lorem  dolor sit amet ipsum.",
-=======
-  });
-  const classes = useStyles();
-  let items = [
-    {
-      img: LoginImg,
-      title: "Lorem ipsum dolor sit amet.",
-    },
-    {
-      img: LoginImg,
-      title: "Lorem  dolor sit ipsum amet.",
->>>>>>> cd4820f77f47a9d840896540f3056d8f6388583c
     },
     {
       img: LoginImg,
@@ -74,11 +61,6 @@ const Auth = () => {
             </div>
           ) : (
             <>
-<<<<<<< HEAD
-=======
-              {/* <img src={LoginImg} className={classes.img} alt="loginImage" />
-              <p className={classes.header}>Lorem, ipsum dolor sit </p> */}
->>>>>>> cd4820f77f47a9d840896540f3056d8f6388583c
               <ImagesCarousel items={items} />
             </>
           )}
