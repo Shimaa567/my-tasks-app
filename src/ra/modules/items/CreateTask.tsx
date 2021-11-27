@@ -49,19 +49,6 @@ const CreateTask = ({ name }) => {
       .finally(() => {
         setLoading(false);
       });
-
-    // try {
-    //   const { data } = await api({ title, description, status, type });
-    //   // SUCCESS STATE
-    //   setLoading(false);
-    //   history.push(`/tasks/${data.id}/show`);
-    // } catch (error) {
-    //   // FAILURE STATE
-    //   setLoading(false);
-    //   // const message = error.response.data.message;
-    //   setError("Failed to create task, please try again!");
-    //   console.log(error);
-    // }
   };
 
   return (
@@ -170,14 +157,3 @@ const CreateTask = ({ name }) => {
 };
 
 export default CreateTask;
-
-{
-  /* <Button
-            variant="outlined"
-            startIcon={<Save />}
-            style={{ marginTop: "30px", marginBottom: "20px" }}
-            onClick={submitFormHandler}
-          >
-            {loading ? "loading..." : "Save"}
-          </Button> */
-}

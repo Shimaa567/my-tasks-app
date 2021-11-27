@@ -62,10 +62,6 @@ const EditTask = ({ name }) => {
         notify(`Successfully Updated !`, { type: "success" });
         history.push(`/${name}/${data.id}/show`);
       });
-    // let data = { title, description, status, type };
-    // await api.editItem({ id, data });
-    // console.log(data);
-    // history.push(`/tasks/${id}/show`);
   };
 
   return (
@@ -174,16 +170,3 @@ const EditTask = ({ name }) => {
 };
 
 export default EditTask;
-
-// const fetchTask = async () => {
-//   setLoading(true);
-//   const { data } = await api.showItem({ id });
-//   setLoading(false);
-
-//   setTitle(data.title);
-//   setDescription(data.description);
-//   setStatus(data.status);
-//   setType(data.type);
-//   console.log(data);
-// };
-// fetchTask();
