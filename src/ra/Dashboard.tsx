@@ -18,6 +18,7 @@ import CreateTask from "./modules/items/CreateTask";
 import Tasks from "./Tasks";
 import customRoutes from "./customRoutes";
 import Auth from "../components/Auth";
+import MyLayout from "./MyLayout";
 
 const i18nProvider = polyglotI18nProvider(
   (locale) => (locale === "ar" ? ar : en),
@@ -30,6 +31,7 @@ const Dashboard: React.FC = () => {
       <GlobalStyles />
       <Admin
         theme={theme}
+        layout={MyLayout}
         dataProvider={dataProvider}
         authProvider={authProvider}
         i18nProvider={i18nProvider}
