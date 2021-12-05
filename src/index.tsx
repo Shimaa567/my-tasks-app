@@ -1,16 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import reportWebVitals from './reportWebVitals';
-import { defineCustomElements } from '@ionic/pwa-elements/loader';
-
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import reportWebVitals from "./reportWebVitals";
+import { defineCustomElements } from "@ionic/pwa-elements/loader";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 ReactDOM.render(
   // <React.StrictMode>
-    <App />,
+  <App />,
   //</React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // Call the element loader after the platform has been bootstrapped

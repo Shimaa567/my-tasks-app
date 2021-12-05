@@ -23,16 +23,18 @@ const TasksList = ({ name }) => {
   const notify = useNotify();
 
   React.useEffect(() => {
-    dataProvider
-      .getList(`${name}`, {
-        pagination: { page: 1, perPage: 10 },
-        sort: { field: "title", order: "ASC" },
-        filter: {},
-      })
-      .then((response) => setData(response.data))
+    if (dataProvider) {
+      dataProvider
+        .getList(`${name}`, {
+          pagination: { page: 1, perPage: 10 },
+          sort: { field: "title", order: "ASC" },
+          filter: {},
+        })
+        .then((response) => setData(response.data))
 
-      .catch((error) => setError(error))
-      .finally(() => setLoading(false));
+        .catch((error) => setError(error))
+        .finally(() => setLoading(false));
+    }
   }, [dataProvider, name]);
 
   const EditHandler = ({ index }) => {
