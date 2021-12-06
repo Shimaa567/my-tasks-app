@@ -14,13 +14,14 @@ import { LoadingButton } from "@mui/lab";
 import Save from "@material-ui/icons/Save";
 import Radio from "@mui/material/Radio";
 import { Params } from "./ShowTask";
-import { useDataProvider, useNotify } from "ra-core";
+import { useDataProvider, useNotify, useTranslate } from "ra-core";
 
 const EditTask = ({ name }) => {
   const { id } = useParams<Params>();
   const history = useHistory();
   const dataProvider = useDataProvider();
   const notify = useNotify();
+  const translate = useTranslate();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -59,7 +60,9 @@ const EditTask = ({ name }) => {
         setDescription(data.description);
         setStatus(data.status);
         setType(data.type);
-        notify(`Successfully Updated !`, { type: "success" });
+        notify(`${translate("ra.notification.successfully_updated")}`, {
+          type: "success",
+        });
         history.push(`/${name}/${data.id}/show`);
       });
   };
@@ -69,10 +72,10 @@ const EditTask = ({ name }) => {
       <Card>
         <Container style={{ padding: "24px" }}>
           <Link href="/tasks" style={{ float: "right" }}>
-            Back to Tasks{" "}
+            {translate("ra.action.back")}
           </Link>
 
-          <h2>Edit a Task</h2>
+          <h2>{translate("ra.action.edit")}</h2>
           <Box>
             <>
               <Radio
@@ -82,7 +85,7 @@ const EditTask = ({ name }) => {
                 name="radio-buttons"
                 inputProps={{ "aria-label": "personal" }}
               />{" "}
-              Personal
+              {translate("ra.type.personal")}
             </>
             <>
               <Radio
@@ -92,29 +95,37 @@ const EditTask = ({ name }) => {
                 name="radio-buttons"
                 inputProps={{ "aria-label": "work" }}
               />{" "}
-              Work
+              {translate("ra.type.work")}
             </>
           </Box>
           <Box>
             <FormControl variant="standard">
-              <InputLabel htmlFor="title">Title*</InputLabel>
+              <InputLabel htmlFor="title">
+                {translate("ra.navigation.title")}
+              </InputLabel>
               <Input
                 id="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
-              <FormHelperText id="title">Enter the task title</FormHelperText>
+              <FormHelperText id="title">
+                {" "}
+                {translate("ra.action.enter_title")}
+              </FormHelperText>
             </FormControl>
 
             <FormControl variant="standard" style={{ marginLeft: "100px" }}>
-              <InputLabel htmlFor="description">Description</InputLabel>
+              <InputLabel htmlFor="description">
+                {" "}
+                {translate("ra.navigation.description")}
+              </InputLabel>
               <Input
                 id="description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
               <FormHelperText id="description">
-                Enter the task description
+                {translate("ra.action.enter_description")}
               </FormHelperText>
             </FormControl>
           </Box>
@@ -127,7 +138,7 @@ const EditTask = ({ name }) => {
                 name="radio-buttons"
                 inputProps={{ "aria-label": "Pending" }}
               />{" "}
-              Pending
+              {translate("ra.status.pending")}
             </>
             <>
               <Radio
@@ -137,7 +148,7 @@ const EditTask = ({ name }) => {
                 name="radio-buttons"
                 inputProps={{ "aria-label": "InProgress" }}
               />{" "}
-              In Progress
+              {translate("ra.status.in_progress")}
             </>
             <>
               <Radio
@@ -147,7 +158,7 @@ const EditTask = ({ name }) => {
                 name="radio-buttons"
                 inputProps={{ "aria-label": "Done" }}
               />{" "}
-              Done
+              {translate("ra.status.done")}
             </>
           </Box>
           {error && <p>{error}</p>}
@@ -161,7 +172,7 @@ const EditTask = ({ name }) => {
             startIcon={<Save />}
             variant="contained"
           >
-            Save
+            {translate("ra.action.save")}
           </LoadingButton>
         </Container>
       </Card>

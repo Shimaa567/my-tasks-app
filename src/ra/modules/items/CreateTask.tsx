@@ -14,12 +14,13 @@ import {
 import { LoadingButton } from "@mui/lab";
 import Save from "@material-ui/icons/Save";
 import Radio from "@mui/material/Radio";
-import { useDataProvider, useNotify } from "ra-core";
+import { useDataProvider, useNotify, useTranslate } from "ra-core";
 
 const CreateTask = ({ name }) => {
   const history = useHistory();
   const dataProvider = useDataProvider();
   const notify = useNotify();
+  const translate = useTranslate();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -40,7 +41,9 @@ const CreateTask = ({ name }) => {
         setDescription(data.description);
         setStatus(data.status);
         setType(data.type);
-        notify(`Successfully Created !`, { type: "success" });
+        notify(`${translate("ra.notification.successfully_created")}`, {
+          type: "success",
+        });
         history.push(`/${name}/${data.id}/show`);
       })
       .catch((err) => {
@@ -56,10 +59,10 @@ const CreateTask = ({ name }) => {
       <Card>
         <Container style={{ padding: "24px" }}>
           <Link href="/tasks" style={{ float: "right" }}>
-            Back to Tasks{" "}
+            {translate("ra.action.back")}
           </Link>
 
-          <h2>Create a new Task</h2>
+          <h2>{translate("ra.action.create")}</h2>
           <Box>
             <>
               <Radio
@@ -69,7 +72,7 @@ const CreateTask = ({ name }) => {
                 name="radio-buttons"
                 inputProps={{ "aria-label": "personal" }}
               />{" "}
-              Personal
+              {translate("ra.type.personal")}
             </>
             <>
               <Radio
@@ -79,29 +82,36 @@ const CreateTask = ({ name }) => {
                 name="radio-buttons"
                 inputProps={{ "aria-label": "work" }}
               />{" "}
-              Work
+              {translate("ra.type.work")}
             </>
           </Box>
           <Box>
             <FormControl variant="standard">
-              <InputLabel htmlFor="title">Title*</InputLabel>
+              <InputLabel htmlFor="title">
+                {translate("ra.navigation.title")}
+              </InputLabel>
               <Input
                 id="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
-              <FormHelperText id="title">Enter the task title</FormHelperText>
+              <FormHelperText id="title">
+                {translate("ra.action.enter_title")}
+              </FormHelperText>
             </FormControl>
 
             <FormControl variant="standard" style={{ marginLeft: "100px" }}>
-              <InputLabel htmlFor="description">Description</InputLabel>
+              <InputLabel htmlFor="description">
+                {" "}
+                {translate("ra.navigation.description")}
+              </InputLabel>
               <Input
                 id="description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
               <FormHelperText id="description">
-                Enter the task description
+                {translate("ra.action.enter_description")}
               </FormHelperText>
             </FormControl>
           </Box>
@@ -114,7 +124,7 @@ const CreateTask = ({ name }) => {
                 name="radio-buttons"
                 inputProps={{ "aria-label": "Pending" }}
               />{" "}
-              Pending
+              {translate("ra.status.pending")}
             </>
             <>
               <Radio
@@ -124,7 +134,7 @@ const CreateTask = ({ name }) => {
                 name="radio-buttons"
                 inputProps={{ "aria-label": "InProgress" }}
               />{" "}
-              In Progress
+              {translate("ra.status.in_progress")}
             </>
             <>
               <Radio
@@ -134,7 +144,7 @@ const CreateTask = ({ name }) => {
                 name="radio-buttons"
                 inputProps={{ "aria-label": "Done" }}
               />{" "}
-              Done
+              {translate("ra.status.done")}
             </>
           </Box>
           {error && <p>{error}</p>}
@@ -148,7 +158,7 @@ const CreateTask = ({ name }) => {
             startIcon={<Save />}
             variant="contained"
           >
-            Save
+            {translate("ra.action.save")}
           </LoadingButton>
         </Container>
       </Card>

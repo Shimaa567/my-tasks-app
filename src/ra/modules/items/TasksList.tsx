@@ -11,9 +11,10 @@ import AddIcon from "@material-ui/icons/Add";
 import { useHistory } from "react-router";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { useDataProvider, useNotify } from "ra-core";
+import { useDataProvider, useNotify, useTranslate } from "ra-core";
 
 const TasksList = ({ name }) => {
+  const translate = useTranslate();
   const [data, setData] = React.useState<any[]>([]);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState("");
@@ -23,16 +24,18 @@ const TasksList = ({ name }) => {
   const notify = useNotify();
 
   React.useEffect(() => {
-    dataProvider
-      .getList(`${name}`, {
-        pagination: { page: 1, perPage: 10 },
-        sort: { field: "title", order: "ASC" },
-        filter: {},
-      })
-      .then((response) => setData(response.data))
+    if (dataProvider) {
+      dataProvider
+        .getList(`${name}`, {
+          pagination: { page: 1, perPage: 10 },
+          sort: { field: "title", order: "ASC" },
+          filter: {},
+        })
+        .then((response) => setData(response.data))
 
-      .catch((error) => setError(error))
-      .finally(() => setLoading(false));
+        .catch((error) => setError(error))
+        .finally(() => setLoading(false));
+    }
   }, [dataProvider, name]);
 
   const EditHandler = ({ index }) => {
@@ -53,8 +56,7 @@ const TasksList = ({ name }) => {
   const DeleteHandler = ({ index }) => {
     const deleteItemHandler = async () => {
       const id = index;
-      if (window.confirm("Are you sure you want to delete this Item ?")) {
-        console.log(index);
+      if (window.confirm(translate("ra.message.delete_message"))) {
         setLoading(true);
         dataProvider
           .delete(`${name}`, {
@@ -75,7 +77,7 @@ const TasksList = ({ name }) => {
       <FormControlLabel
         control={
           <IconButton color="secondary" onClick={deleteItemHandler}>
-            <DeleteIcon style={{ color: "#F50057" }} />
+            <DeleteIcon style={{ fill: "#F50057 !important" }} />
           </IconButton>
         }
         label={""}
@@ -86,7 +88,7 @@ const TasksList = ({ name }) => {
   return (
     <>
       <Box>
-        <h2 style={{ margin: "10px" }}>List of {`${name}`}</h2>
+        <h2 style={{ margin: "10px" }}>{translate("ra.navigation.list")}</h2>
         <Button
           variant="outlined"
           onClick={() => history.push(`${name}/create`)}
@@ -107,15 +109,25 @@ const TasksList = ({ name }) => {
               pagination
               rows={data}
               columns={[
-                { field: "title", headerName: "Title", editable: true },
+                {
+                  field: "title",
+                  headerName: `${translate("ra.navigation.title")}`,
+                  editable: true,
+                },
                 {
                   field: "description",
                   width: 200,
-                  headerName: "Description",
+                  headerName: `${translate("ra.navigation.description")}`,
                   editable: true,
                 },
-                { field: "status", headerName: "Status" },
-                { field: "type", headerName: "Type" },
+                {
+                  field: "status",
+                  headerName: `${translate("ra.navigation.status")}`,
+                },
+                {
+                  field: "type",
+                  headerName: `${translate("ra.navigation.type")}`,
+                },
                 {
                   field: "actions",
                   headerName: "",
