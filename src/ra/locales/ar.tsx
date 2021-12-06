@@ -1,5 +1,5 @@
 import { TranslationMessages } from "ra-core";
-import englishMessages from "ra-language-english";
+import { englishMessages } from "./en";
 import merge from "lodash/merge";
 
 export const arabicMessages: TranslationMessages = merge({}, englishMessages, {
@@ -34,6 +34,21 @@ export const arabicMessages: TranslationMessages = merge({}, englishMessages, {
       successfully_created: "تم إنشاء العنصر",
       successfully_updated: "تم تحديث العنصر",
       successfully_deleted: "تمت إزالة العنصر",
+    },
+    navigation: {
+      home: "الصفحة الرئيسية",
+      list: "قائمة المهام",
+    },
+    status: {
+      status: "الحالة",
+      pending: "مُعلَق",
+      in_progress: "جارى",
+      done: "تم",
+    },
+    type: {
+      type: "النوع",
+      work: "عمل",
+      personal: "شخصى",
     },
   },
 });

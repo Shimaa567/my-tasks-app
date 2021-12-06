@@ -18,7 +18,7 @@ import CreateTask from "./modules/items/CreateTask";
 import Tasks from "./Tasks";
 import customRoutes from "./customRoutes";
 import Auth from "../components/Auth";
-import MyLayout from "./MyLayout";
+import { MyLayout } from "./MyLayout";
 
 const i18nProvider = polyglotI18nProvider(
   (locale) => (locale === "ar" ? ar : en),

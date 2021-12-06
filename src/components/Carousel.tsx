@@ -1,7 +1,5 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core";
-// import Carousel from "react-material-ui-carousel";
-// import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import Slider from "react-slick";
 
 interface Item {
@@ -13,8 +11,6 @@ interface Props {
 }
 
 const ImagesCarousel: React.FC<Props> = ({ items }) => {
-  // const isMobile = useMediaQuery((theme: any) => theme.breakpoints.down("sm"));
-
   const useStyles = makeStyles({
     container: {
       padding: "40px",
