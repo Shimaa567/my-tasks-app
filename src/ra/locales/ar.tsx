@@ -8,10 +8,13 @@ export const arabicMessages: TranslationMessages = merge({}, englishMessages, {
       delete: "حذف",
       show: "عرض",
       list: "قائمة",
-      create: "إنشاء",
-      edit: "تعديل",
+      create: "إنشاء مهمة جديدة",
+      edit: "تعديل مهمة",
       cancel: "إلغاء",
       save: "حفظ",
+      back: "الرجوع إلى القائمه الرئيسية",
+      enter_title: "ادخل عنوان المهمة",
+      enter_description: "ادخل وصف المهمة",
     },
     auth: {
       login: "تسجيل دخول",
@@ -23,9 +26,10 @@ export const arabicMessages: TranslationMessages = merge({}, englishMessages, {
       email: "البريد الإلكترونى",
       password: "كلمة المرور",
       logout: "تسجيل خروج",
-      error: "خطأ",
+      error: "حدث خطأ",
     },
     message: {
+      error_message: "تحقق من الخادم الخاص بك",
       delete_message: "هل أنت متأكد أنك تريد حذف هذا العنصر؟",
     },
     notification: {
@@ -38,15 +42,17 @@ export const arabicMessages: TranslationMessages = merge({}, englishMessages, {
     navigation: {
       home: "الصفحة الرئيسية",
       list: "قائمة المهام",
+      title: "العنوان",
+      description: "الوصف",
+      status: "الحالة",
+      type: "النوع",
     },
     status: {
-      status: "الحالة",
       pending: "مُعلَق",
       in_progress: "جارى",
       done: "تم",
     },
     type: {
-      type: "النوع",
       work: "عمل",
       personal: "شخصى",
     },

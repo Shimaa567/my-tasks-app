@@ -9,10 +9,13 @@ export const englishMessages: TranslationMessages = merge(
         delete: "Delete",
         show: "Show",
         list: "List",
-        create: "Create",
-        edit: "Edit",
+        create: "Create a new Task",
+        edit: "Edit a Task",
         cancel: "Cancel",
         save: "Save",
+        back: "Back to Tasks",
+        enter_title: "Enter the task title",
+        enter_description: "Enter the task description",
       },
       auth: {
         login: "Login",
@@ -24,9 +27,10 @@ export const englishMessages: TranslationMessages = merge(
         email: "Email",
         password: "Password",
         logout: "Logout",
-        error: "Error",
+        error: "There's an error occurred",
       },
       message: {
+        error_message: "Check your server",
         delete_message: "Are you sure you want to delete this item ?",
       },
       notification: {
@@ -39,15 +43,18 @@ export const englishMessages: TranslationMessages = merge(
       navigation: {
         home: "Home",
         list: "List of tasks",
+        title: "Title",
+
+        description: "Description",
+        status: "Status",
+        type: "Type",
       },
       status: {
-        status: "Status",
         pending: "Pending",
         in_progress: "In Progress",
         done: "Done",
       },
       type: {
-        type: "Type",
         work: "Work",
         personal: "Personal",
       },

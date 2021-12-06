@@ -109,15 +109,25 @@ const TasksList = ({ name }) => {
               pagination
               rows={data}
               columns={[
-                { field: "title", headerName: "Title", editable: true },
+                {
+                  field: "title",
+                  headerName: `${translate("ra.navigation.title")}`,
+                  editable: true,
+                },
                 {
                   field: "description",
                   width: 200,
-                  headerName: "Description",
+                  headerName: `${translate("ra.navigation.description")}`,
                   editable: true,
                 },
-                { field: "status", headerName: "Status" },
-                { field: "type", headerName: "Type" },
+                {
+                  field: "status",
+                  headerName: `${translate("ra.navigation.status")}`,
+                },
+                {
+                  field: "type",
+                  headerName: `${translate("ra.navigation.type")}`,
+                },
                 {
                   field: "actions",
                   headerName: "",

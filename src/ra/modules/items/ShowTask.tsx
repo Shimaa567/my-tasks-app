@@ -10,7 +10,7 @@ import {
   Box,
   CircularProgress,
 } from "@material-ui/core";
-import { useDataProvider } from "ra-core";
+import { useDataProvider, useTranslate } from "ra-core";
 
 export interface Params {
   id: string | undefined;
@@ -18,6 +18,7 @@ export interface Params {
 const ShowTask = ({ name }) => {
   const { id } = useParams<Params>();
 
+  const translate = useTranslate();
   const [data, setData] = React.useState<any>();
   const [loading, setLoading] = useState(true);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -41,7 +42,7 @@ const ShowTask = ({ name }) => {
             </Box>
           )}
           {error && <p>{error}</p>}
-          <Link href="/tasks">Back to Tasks</Link>
+          <Link href="/tasks"> {translate("ra.action.back")}</Link>
           <List>
             <ListItem alignItems="flex-start">
               {data ? (
@@ -51,8 +52,8 @@ const ShowTask = ({ name }) => {
                 ></ListItemText>
               ) : (
                 <ListItemText
-                  primary="There's an error occurred"
-                  secondary="Check your server"
+                  primary={`${translate("ra.auth.error")}`}
+                  secondary={`${translate("ra.message.error_message")}`}
                 ></ListItemText>
               )}
             </ListItem>

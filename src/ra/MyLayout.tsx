@@ -8,6 +8,7 @@ import {
   useLocale,
   useSetLocale,
   AppBar,
+  // useTranslate,
 } from "react-admin";
 
 import { ListItemIcon, MenuItem } from "@material-ui/core";
@@ -16,7 +17,6 @@ import * as Icons from "@material-ui/icons";
 const MyMenu = (props) => (
   <Menu {...props}>
     <MenuItemLink to="/" primaryText="Home" leftIcon={<Icons.Home />} />
-    {/* <MenuItemLink to="/orders" primaryText="Orders" leftIcon={<Icons.ShoppingCart />}/> */}
   </Menu>
 );
 
