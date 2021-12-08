@@ -12,6 +12,8 @@ export const arabicMessages: TranslationMessages = merge({}, englishMessages, {
       edit: "تعديل مهمة",
       cancel: "إلغاء",
       save: "حفظ",
+      remember: "تذكرنى",
+      forget_password: "هل نسيت كلمة المرور ؟",
       back: "الرجوع إلى القائمه الرئيسية",
       enter_title: "ادخل عنوان المهمة",
       enter_description: "ادخل وصف المهمة",
@@ -21,6 +23,7 @@ export const arabicMessages: TranslationMessages = merge({}, englishMessages, {
       sign_in_error: "حدث خطأ فى تسجيل الدخول ، برجاء إعادة المحاولة",
       sign_up: "تسجيل",
       username: "اسم المستخدم",
+      username_or_email: "اسم المستخدم او البريد الألكترونى",
       first_name: "الاسم الأول",
       last_name: "الاسم الأخير",
       email: "البريد الإلكترونى",
@@ -31,6 +34,12 @@ export const arabicMessages: TranslationMessages = merge({}, englishMessages, {
     message: {
       error_message: "تحقق من الخادم الخاص بك",
       delete_message: "هل أنت متأكد أنك تريد حذف هذا العنصر؟",
+      register_message: "لا تملك حسابا حتى الآن ؟",
+      login_message: "هل لديك حساب بالفعل ؟",
+    },
+    header: {
+      login_header: "تسجيل الدخول إلى حسابك",
+      register_header: "",
     },
     notification: {
       welcome_back: "أهلا بعودتك !",

@@ -40,7 +40,7 @@ const EditTask = ({ name }) => {
         setType(data.type);
       })
       .catch((err) => {
-        setError(err);
+        setError("Can not found the task");
       })
       .finally(() => {
         setLoading(false);

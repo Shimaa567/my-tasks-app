@@ -1,6 +1,6 @@
 import React from "react";
 import { ThemeProvider } from "@material-ui/core";
-import { Admin } from "react-admin";
+import { Admin, useLocale } from "react-admin";
 
 import polyglotI18nProvider from "ra-i18n-polyglot";
 import { ar, en } from "./locales";
@@ -20,17 +20,27 @@ import customRoutes from "./customRoutes";
 import Auth from "../components/Auth";
 import { MyLayout } from "./MyLayout";
 
-const i18nProvider = polyglotI18nProvider(
-  (locale) => (locale === "ar" ? ar : en),
-  "en"
-);
+const body = document.getElementsByTagName("body")[0];
+const i18nProvider = polyglotI18nProvider((locale) => {
+  if (locale === "ar") {
+    body.setAttribute("dir", "rtl");
+    localStorage.setItem("lang", "ar");
+    return ar;
+  } else {
+    body.setAttribute("dir", "ltr");
+    localStorage.setItem("lang", "en");
+    return en;
+  }
+}, localStorage.getItem("lang") || "en");
 
 const Dashboard: React.FC = () => {
+  const locale = useLocale();
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <Admin
-        theme={theme}
+        theme={{ ...theme, direction: locale === "ar" ? "rtl" : "ltr" }}
         layout={MyLayout}
         dataProvider={dataProvider}
         authProvider={authProvider}

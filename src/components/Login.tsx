@@ -69,8 +69,8 @@ const Login: React.FC<Props> = ({ setCurrentShownForm }) => {
     },
     actions: {
       display: "flex",
-      justifyContent: "center",
-      margin: "10px 0",
+      justifyContent: "space-around",
+      margin: "10px 20px",
     },
     checkboxLabel: {
       alignSelf: "center",
@@ -135,16 +135,17 @@ const Login: React.FC<Props> = ({ setCurrentShownForm }) => {
           <LoginDialog setCurrentShownForm={setCurrentShownForm} />
         ) : (
           <div className={classes.container}>
-            <p className={classes.header}>Login to your Account</p>
+            <p className={classes.header}>
+              {translate("ra.header.login_header")}
+            </p>
             <form className={classes.form} onSubmit={(e) => handleLogin(e)}>
               <OutlinedInput
                 className={classes.input}
                 type="text"
-                placeholder="User Name or Email"
+                placeholder={translate("ra.auth.username_or_email")}
                 fullWidth
                 required
                 id="username"
-                // label={translate("ra.auth.username")}
                 value={loginData.username}
                 onChange={(e) =>
                   setLoginData({ ...loginData, username: e.target.value })
@@ -162,7 +163,6 @@ const Login: React.FC<Props> = ({ setCurrentShownForm }) => {
                 type={passwordValues.showPassword ? "text" : "password"}
                 fullWidth
                 required
-                // label={translate("ra.auth.password")}
                 value={loginData.password}
                 disabled={loading}
                 endAdornment={
@@ -180,20 +180,20 @@ const Login: React.FC<Props> = ({ setCurrentShownForm }) => {
                     </IconButton>
                   </InputAdornment>
                 }
-                placeholder="Password"
+                placeholder={translate("ra.auth.password")}
               />
 
               <div className={classes.actions}>
-                <Checkbox sx={{ padding: "9px 0" }} />
-                <span className={classes.checkboxLabel}>Remember me</span>
-                <span
-                  className={classes.checkboxLabel}
-                  style={{ paddingLeft: "45px" }}
-                >
-                  Forget your password ?
+                <div>
+                  <Checkbox sx={{ padding: "9px 0" }} />
+                  <span className={classes.checkboxLabel}>
+                    {translate("ra.action.remember")}
+                  </span>
+                </div>
+                <span className={classes.checkboxLabel}>
+                  {translate("ra.action.forget_password")}
                 </span>
               </div>
-              {loading && <CircularProgress size={50} thickness={3} />}
 
               <Button
                 className={classes.button}
@@ -207,10 +207,11 @@ const Login: React.FC<Props> = ({ setCurrentShownForm }) => {
                   Login
                 </span>
               </Button>
+              {loading && <CircularProgress size={50} thickness={3} />}
 
               <div style={{ textAlign: "center" }}>
                 <span>
-                  Don't have an account yet?&nbsp;
+                  {translate("ra.message.register_message")}&nbsp;
                   <Button
                     href="#text-button"
                     onClick={(e) => {
@@ -218,7 +219,9 @@ const Login: React.FC<Props> = ({ setCurrentShownForm }) => {
                       setCurrentShownForm(AuthForms.SIGNUP);
                     }}
                   >
-                    <span style={{ color: "#30AFF3" }}>Signup</span>
+                    <span style={{ color: "#30AFF3" }}>
+                      {translate("ra.auth.sign_up")}
+                    </span>
                   </Button>
                 </span>
               </div>
