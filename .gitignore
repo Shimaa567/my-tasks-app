@@ -15,6 +15,7 @@ resources/ios/*
 android/
 ios/
 package-lock.json
+yarn.lock
 
 # misc
 .DS_Store

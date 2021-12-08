@@ -58,11 +58,12 @@ const CreateTask = ({ name }) => {
     <div>
       <Card>
         <Container style={{ padding: "24px" }}>
-          <Link href="/tasks" style={{ float: "right" }}>
-            {translate("ra.action.back")}
-          </Link>
-
-          <h2>{translate("ra.action.create")}</h2>
+          <Box style={{ display: "flex", justifyContent: "space-between" }}>
+            <h2>{translate("ra.action.create")}</h2>
+            <Link href="/tasks" style={{ float: "right" }}>
+              {translate("ra.action.back")}
+            </Link>
+          </Box>
           <Box>
             <>
               <Radio
@@ -85,7 +86,7 @@ const CreateTask = ({ name }) => {
               {translate("ra.type.work")}
             </>
           </Box>
-          <Box>
+          <Box style={{ display: "flex", justifyContent: "space-around" }}>
             <FormControl variant="standard">
               <InputLabel htmlFor="title">
                 {translate("ra.navigation.title")}
@@ -100,7 +101,7 @@ const CreateTask = ({ name }) => {
               </FormHelperText>
             </FormControl>
 
-            <FormControl variant="standard" style={{ marginLeft: "100px" }}>
+            <FormControl variant="standard">
               <InputLabel htmlFor="description">
                 {" "}
                 {translate("ra.navigation.description")}
@@ -155,7 +156,7 @@ const CreateTask = ({ name }) => {
             onClick={submitFormHandler}
             loading={loading}
             loadingPosition="start"
-            startIcon={<Save />}
+            startIcon={<Save style={{ margin: "3px" }} />}
             variant="contained"
           >
             {translate("ra.action.save")}

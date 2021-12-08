@@ -13,6 +13,8 @@ export const englishMessages: TranslationMessages = merge(
         edit: "Edit a Task",
         cancel: "Cancel",
         save: "Save",
+        remember: "Remember me",
+        forget_password: "Forget your password ?",
         back: "Back to Tasks",
         enter_title: "Enter the task title",
         enter_description: "Enter the task description",
@@ -22,6 +24,7 @@ export const englishMessages: TranslationMessages = merge(
         sign_in_error: "Error in Login, please try again!",
         sign_up: "Sign Up",
         username: "Username",
+        username_or_email: "User Name or Email",
         first_name: "First Name",
         last_name: "Last Name",
         email: "Email",
@@ -32,6 +35,12 @@ export const englishMessages: TranslationMessages = merge(
       message: {
         error_message: "Check your server",
         delete_message: "Are you sure you want to delete this item ?",
+        register_message: "Don't have an account yet?",
+        login_message: "Already have an account?",
+      },
+      header: {
+        login_header: "Login to your Account",
+        register_header: "",
       },
       notification: {
         welcome_back: "Welcome back!",

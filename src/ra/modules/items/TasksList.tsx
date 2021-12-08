@@ -87,12 +87,11 @@ const TasksList = ({ name }) => {
 
   return (
     <>
-      <Box>
+      <Box style={{ display: "inline-flex", justifyContent: "space-between" }}>
         <h2 style={{ margin: "10px" }}>{translate("ra.navigation.list")}</h2>
         <Button
           variant="outlined"
           onClick={() => history.push(`${name}/create`)}
-          style={{ float: "right", marginTop: "-40px" }}
         >
           <AddIcon />
         </Button>
@@ -131,6 +130,7 @@ const TasksList = ({ name }) => {
                 {
                   field: "actions",
                   headerName: "",
+                  width: 125,
                   renderCell: (params) => {
                     return (
                       <div
